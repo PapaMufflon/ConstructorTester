@@ -1,0 +1,11 @@
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\obj\Debug\TestProject1.csprojResolveAssemblyReference.cache
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\TestProject1.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\TestProject1.pdb
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\nunit.framework.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\nunit.mocks.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\pnunit.framework.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\nunit.framework.xml
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\obj\Debug\TestProject1.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\obj\Debug\TestProject1.pdb
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\ConstructorTester.dll
+c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\TestProject1\bin\Debug\ConstructorTester.pdb

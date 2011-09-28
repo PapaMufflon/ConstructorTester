@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="445950b0-2e9b-4081-91ff-cf7ea11daeff" name="Mufflon@HOME-PC 2011-09-27 21:32:51" runUser="HOME-PC\Mufflon" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6c7d477a-e894-4a70-b286-0f6354b03526">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Mufflon_HOME-PC 2011-09-27 21_32_51">
+      <DeploymentItem filename="C:\Users\Mufflon\documents\visual studio 11\Projects\ConstructorTester\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll" />
+      <DeploymentItem filename="C:\Users\Mufflon\documents\visual studio 11\Projects\ConstructorTester\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll" />
+      <DeploymentItem filename="C:\Users\Mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\bin\Debug\ConstructorTester.dll" />
+      <DeploymentItem filename="C:\Users\Mufflon\documents\visual studio 11\Projects\ConstructorTester\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-09-27T21:32:51.3615671+02:00" queuing="2011-09-27T21:32:51.4395668+02:00" start="2011-09-27T21:32:51.5175671+02:00" finish="2011-09-27T21:32:52.3755724+02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="8" executed="8" passed="7" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="When_given_a_constructor_of_an_internal_class_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="dbbbe58d-9b08-5cfd-b33e-a060ac86e32c">
+      <Execution id="36cf92c2-1a55-4e8d-b166-37723b1527cb" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_of_an_internal_class_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_constructor_with_one_interface_parameter_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="a7aef663-41f9-5d8a-b5a0-852543a8fa27">
+      <Execution id="57adc018-106a-46fa-b1f7-26213b111632" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_with_one_interface_parameter_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_default_constructor_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="109f2b18-5fe0-6cc6-e617-564a51ff5ba3">
+      <Execution id="01d977ad-32db-43db-90da-6d9e69745d5e" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_default_constructor_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_an_internal_constructor_with_one_class_parameter_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="c1546c68-3d37-df22-0334-d20ca54e92ab">
+      <Execution id="373c519a-d875-4f32-b907-3cdc370e087f" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_an_internal_constructor_with_one_class_parameter_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_constructor_with_one_value_parameter_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="8037305c-f53e-428f-e951-87f57bffe102">
+      <Execution id="912243c1-19f4-4f5e-8866-633ed453a8f7" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_with_one_value_parameter_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_constructor_with_one_class_parameter_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="98101bdf-c153-0c62-21d5-ea83358f3fb2">
+      <Execution id="d6c293c7-6065-47c8-ac65-7ab4848a4e97" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_with_one_class_parameter_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_constructor_calling_an_abstract_base_class_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="1be7005f-3454-1b0e-0ae2-005b83a28cb2">
+      <Execution id="ce4f5bf1-a2a3-42e6-971f-d42aada1c14a" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_calling_an_abstract_base_class_Then_it_should_handle_this" />
+    </UnitTest>
+    <UnitTest name="When_given_a_constructor_with_a_string_as_parameter_Then_it_should_handle_this" storage="c:\users\mufflon\documents\visual studio 11\projects\constructortester\testproject1\bin\debug\constructortestertests.dll" id="73982f5e-9dd6-9acc-7e94-0cae2b0d135e">
+      <Execution id="672dd6c1-6c66-4f80-bce8-3c4a987a6cf7" />
+      <TestMethod codeBase="C:/Users/Mufflon/documents/visual studio 11/Projects/ConstructorTester/TestProject1/bin/Debug/ConstructorTesterTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="ConstructorTesterTests.ArgumentNullTestTests, ConstructorTesterTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="When_given_a_constructor_with_a_string_as_parameter_Then_it_should_handle_this" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="109f2b18-5fe0-6cc6-e617-564a51ff5ba3" executionId="01d977ad-32db-43db-90da-6d9e69745d5e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1be7005f-3454-1b0e-0ae2-005b83a28cb2" executionId="ce4f5bf1-a2a3-42e6-971f-d42aada1c14a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="73982f5e-9dd6-9acc-7e94-0cae2b0d135e" executionId="672dd6c1-6c66-4f80-bce8-3c4a987a6cf7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8037305c-f53e-428f-e951-87f57bffe102" executionId="912243c1-19f4-4f5e-8866-633ed453a8f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98101bdf-c153-0c62-21d5-ea83358f3fb2" executionId="d6c293c7-6065-47c8-ac65-7ab4848a4e97" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7aef663-41f9-5d8a-b5a0-852543a8fa27" executionId="57adc018-106a-46fa-b1f7-26213b111632" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1546c68-3d37-df22-0334-d20ca54e92ab" executionId="373c519a-d875-4f32-b907-3cdc370e087f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dbbbe58d-9b08-5cfd-b33e-a060ac86e32c" executionId="36cf92c2-1a55-4e8d-b166-37723b1527cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="01d977ad-32db-43db-90da-6d9e69745d5e" testId="109f2b18-5fe0-6cc6-e617-564a51ff5ba3" testName="When_given_a_default_constructor_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0324105" startTime="2011-09-27T21:32:51.5487668+02:00" endTime="2011-09-27T21:32:51.9855646+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="01d977ad-32db-43db-90da-6d9e69745d5e">
+    </UnitTestResult>
+    <UnitTestResult executionId="ce4f5bf1-a2a3-42e6-971f-d42aada1c14a" testId="1be7005f-3454-1b0e-0ae2-005b83a28cb2" testName="When_given_a_constructor_calling_an_abstract_base_class_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0045334" startTime="2011-09-27T21:32:52.0479641+02:00" endTime="2011-09-27T21:32:52.0479641+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ce4f5bf1-a2a3-42e6-971f-d42aada1c14a">
+    </UnitTestResult>
+    <UnitTestResult executionId="672dd6c1-6c66-4f80-bce8-3c4a987a6cf7" testId="73982f5e-9dd6-9acc-7e94-0cae2b0d135e" testName="When_given_a_constructor_with_a_string_as_parameter_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0027229" startTime="2011-09-27T21:32:52.0791645+02:00" endTime="2011-09-27T21:32:52.0791645+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="672dd6c1-6c66-4f80-bce8-3c4a987a6cf7">
+    </UnitTestResult>
+    <UnitTestResult executionId="912243c1-19f4-4f5e-8866-633ed453a8f7" testId="8037305c-f53e-428f-e951-87f57bffe102" testName="When_given_a_constructor_with_one_value_parameter_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0004863" startTime="2011-09-27T21:32:52.0947679+02:00" endTime="2011-09-27T21:32:52.0947679+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="912243c1-19f4-4f5e-8866-633ed453a8f7">
+    </UnitTestResult>
+    <UnitTestResult executionId="d6c293c7-6065-47c8-ac65-7ab4848a4e97" testId="98101bdf-c153-0c62-21d5-ea83358f3fb2" testName="When_given_a_constructor_with_one_class_parameter_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0243746" startTime="2011-09-27T21:32:52.0947679+02:00" endTime="2011-09-27T21:32:52.1259676+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d6c293c7-6065-47c8-ac65-7ab4848a4e97">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Fail failed. bullshit</Message>
+          <StackTrace>   at ConstructorTesterTests.ArgumentNullTestTests.&lt;Setup&gt;b__0(String s) in c:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\TestProject1\ArgumentNullTestTests.cs:line 16
+   at ConstructorTester.ArgumentNullTest.TestOneParameterForNull(ConstructorInfo constructor, Object[] parameters, Int32 parameterToTest) in c:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\ConstructorTester\ArgumentNullTest.cs:line 98
+   at ConstructorTester.ArgumentNullTest.TestParameters(ConstructorInfo constructor, Object[] parameters) in c:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\ConstructorTester\ArgumentNullTest.cs:line 75
+   at ConstructorTester.ArgumentNullTest.Execute(Type classUnderTest) in c:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\ConstructorTester\ArgumentNullTest.cs:line 33
+   at ConstructorTesterTests.ArgumentNullTestTests.When_given_a_constructor_with_one_class_parameter_Then_it_should_handle_this() in c:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\TestProject1\ArgumentNullTestTests.cs:line 28
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="57adc018-106a-46fa-b1f7-26213b111632" testId="a7aef663-41f9-5d8a-b5a0-852543a8fa27" testName="When_given_a_constructor_with_one_interface_parameter_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.1433746" startTime="2011-09-27T21:32:52.1415678+02:00" endTime="2011-09-27T21:32:52.2975650+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="57adc018-106a-46fa-b1f7-26213b111632">
+    </UnitTestResult>
+    <UnitTestResult executionId="373c519a-d875-4f32-b907-3cdc370e087f" testId="c1546c68-3d37-df22-0334-d20ca54e92ab" testName="When_given_an_internal_constructor_with_one_class_parameter_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0012273" startTime="2011-09-27T21:32:52.2975650+02:00" endTime="2011-09-27T21:32:52.2975650+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="373c519a-d875-4f32-b907-3cdc370e087f">
+    </UnitTestResult>
+    <UnitTestResult executionId="36cf92c2-1a55-4e8d-b166-37723b1527cb" testId="dbbbe58d-9b08-5cfd-b33e-a060ac86e32c" testName="When_given_a_constructor_of_an_internal_class_Then_it_should_handle_this" computerName="HOME-PC" duration="00:00:00.0027947" startTime="2011-09-27T21:32:52.3131684+02:00" endTime="2011-09-27T21:32:52.3287667+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="36cf92c2-1a55-4e8d-b166-37723b1527cb">
+    </UnitTestResult>
+  </Results>
+</TestRun>
