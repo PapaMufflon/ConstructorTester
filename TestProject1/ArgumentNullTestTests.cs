@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ConstructorTester;
 using ConstructorTesterTests.TestClasses;
 
@@ -71,9 +68,16 @@ namespace ConstructorTesterTests
         }
 
         [TestMethod]
+        public void When_given_an_abstract_class_Then_it_should_not_throw_an_exception()
+        {
+            ArgumentNullTest.Execute(typeof(AbstractBaseClass));
+        }
+
+        [TestMethod]
         public void When_given_an_assembly_with_several_classes_Then_it_should_handle_this()
         {
             ArgumentNullTest.Execute(System.Reflection.Assembly.GetExecutingAssembly());
         }
+
     }
 }

@@ -21,7 +21,7 @@ namespace ConstructorTester
             {
                 if (_failedAssertionAction == null)
                     _failedAssertionAction = s => Console.WriteLine(s);
-                
+
                 return _failedAssertionAction;
             }
 
@@ -38,7 +38,7 @@ namespace ConstructorTester
         /// <param name="assemblyUnderTest"><c>Assembly</c> to check.</param>
         public static void Execute(Assembly assemblyUnderTest)
         {
-            foreach (var classUnderTest in assemblyUnderTest.GetExportedTypes())
+            foreach (var classUnderTest in assemblyUnderTest.GetTypes())
                 Execute(classUnderTest);
         }
 
@@ -48,10 +48,13 @@ namespace ConstructorTester
         /// <param name="classUnderTest"><c>Type</c> to check.</param>
         public static void Execute(Type classUnderTest)
         {
-            foreach (var constructor in classUnderTest.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
+            if (!classUnderTest.IsAbstract)
             {
-                var parameters = GetParameters(constructor.GetParameters());
-                TestParameters(constructor, parameters, classUnderTest.ToString());
+                foreach (var constructor in classUnderTest.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
+                {
+                    var parameters = GetParameters(constructor.GetParameters());
+                    TestParameters(constructor, parameters, classUnderTest.ToString());
+                }
             }
         }
 
