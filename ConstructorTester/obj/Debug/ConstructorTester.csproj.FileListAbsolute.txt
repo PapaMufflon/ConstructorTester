@@ -1,6 +1,0 @@
-c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\bin\Debug\ConstructorTester.dll
-c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\bin\Debug\ConstructorTester.pdb
-c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\obj\Debug\ConstructorTester.csprojResolveAssemblyReference.cache
-c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\obj\Debug\ConstructorTester.dll
-c:\users\mufflon\documents\visual studio 11\Projects\ConstructorTester\ConstructorTester\obj\Debug\ConstructorTester.pdb
-C:\Users\Mufflon\Documents\Visual Studio 11\Projects\ConstructorTester\ConstructorTester\bin\Debug\Rhino.Mocks.dll
