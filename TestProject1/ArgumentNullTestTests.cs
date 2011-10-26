@@ -68,6 +68,29 @@ namespace ConstructorTesterTests
         }
 
         [TestMethod]
+        public void When_given_a_constructor_with_an_abstract_class_as_argument_Then_it_should_handle_this()
+        {
+            ArgumentNullTest.Execute(typeof(ClassWithAbstractArgument));
+        }
+
+        [TestMethod]
+        public void When_given_a_constructor_with_an_internal_abstract_class_as_argument_which_has_an_implementing_public_class_Then_it_should_handle_this()
+        {
+            ArgumentNullTest.Execute(typeof(ClassWithInternalAbstractArgument));
+        }
+
+        [TestMethod]
+        public void When_given_a_constructor_with_an_internal_abstract_class_as_argument_and_an_implementation_for_that_Then_it_should_handle_this()
+        {
+            ArgumentNullTest.Register<LonlyAbstractBaseClass, ImplementationForLonlyAbstractBaseClass>();
+            ArgumentNullTest.Execute(typeof(ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly));
+        }
+
+        private class ImplementationForLonlyAbstractBaseClass : LonlyAbstractBaseClass
+        {
+        }
+
+        [TestMethod]
         public void When_given_an_abstract_class_Then_it_should_not_throw_an_exception()
         {
             ArgumentNullTest.Execute(typeof(AbstractBaseClass));
@@ -78,6 +101,6 @@ namespace ConstructorTesterTests
         {
             ArgumentNullTest.Execute(System.Reflection.Assembly.GetExecutingAssembly());
         }
-
     }
+
 }

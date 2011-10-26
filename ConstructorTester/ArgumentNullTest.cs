@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
 using Rhino.Mocks;
 
 namespace ConstructorTester
@@ -9,6 +11,7 @@ namespace ConstructorTester
     public class ArgumentNullTest
     {
         private static Action<string> _failedAssertionAction;
+        private static IWindsorContainer _container = new WindsorContainer();
 
         /// <summary>
         /// If a parameter is found, which is not checked for null, this action is invoked.
@@ -64,9 +67,20 @@ namespace ConstructorTester
 
             foreach (var parameterType in parameterInfo.Select(x => x.ParameterType))
             {
-                if (parameterType.IsInterface)
+                if (parameterType.IsInterface ||
+                    (parameterType.IsAbstract && parameterType.IsPublic) )
                 {
                     parameters.Add(MockRepository.GenerateStub(parameterType));
+                }
+                else if (parameterType.IsAbstract)
+                {
+                    var implementation = SearchImplementation(parameterType);
+
+                    if (implementation == null)
+                        implementation = _container.Resolve(parameterType);
+
+                    if (implementation != null)
+                        parameters.Add(implementation);
                 }
                 else if (parameterType.IsValueType)
                 {
@@ -78,8 +92,6 @@ namespace ConstructorTester
                 }
                 else
                 {
-                    var constructors = parameterType.GetConstructors();
-
                     var constructor = parameterType.GetConstructors()[0];
                     var parametersForConstructor = GetParameters(constructor.GetParameters());
                     parameters.Add(constructor.Invoke(parametersForConstructor));
@@ -87,6 +99,21 @@ namespace ConstructorTester
             }
 
             return parameters.ToArray();
+        }
+
+        private static object SearchImplementation(Type internalAbstractType)
+        {
+            foreach (var type in internalAbstractType.Assembly.GetTypes())
+            {
+                if (type.BaseType == internalAbstractType)
+                {
+                    var constructor = type.GetConstructors()[0];
+                    var parametersForConstructor = GetParameters(constructor.GetParameters());
+                    return constructor.Invoke(parametersForConstructor);
+                }
+            }
+
+            throw new ArgumentException("Cannot find a class implementing " + internalAbstractType);
         }
 
         private static void TestParameters(ConstructorInfo constructor, object[] parameters, string classUnderTest)
@@ -119,6 +146,13 @@ namespace ConstructorTester
 
             if (!catched)
                 FailedAssertionAction.Invoke(string.Format("Parameter number {0} of constructor {1} of class {2} was not tested for null.", parameterToTest, constructor, classUnderTest));
+        }
+
+        public static void Register<TBase, TImplementation>()
+            where TImplementation : TBase
+            where TBase : class
+        {
+            _container.Register(Component.For<TBase>().ImplementedBy<TImplementation>());
         }
     }
 }

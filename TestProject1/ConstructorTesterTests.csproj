@@ -56,7 +56,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArgumentNullTestTests.cs" />
     <Compile Include="TestClasses\AbstractBaseClass.cs" />
+    <Compile Include="TestClasses\AbstractBaseClassImpl.cs" />
+    <Compile Include="TestClasses\ClassWithAbstractArgument.cs" />
     <Compile Include="TestClasses\ClassWithDefaultConstructor.cs" />
+    <Compile Include="TestClasses\ClassWithInternalAbstractArgument.cs" />
+    <Compile Include="TestClasses\ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly.cs" />
     <Compile Include="TestClasses\ClassWithInternalConstructorAndOneClassParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneClassParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneInterfaceParameter.cs" />
@@ -68,6 +72,8 @@
     <Compile Include="TestClasses\IInterface.cs" />
     <Compile Include="TestClasses\InternalClass.cs" />
     <Compile Include="TestClasses\ClassBasedOnAbstractBaseClass.cs" />
+    <Compile Include="TestClasses\LonlyAbstractBaseClass.cs" />
+    <Compile Include="TestClasses\PublicAbstractBaseClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
