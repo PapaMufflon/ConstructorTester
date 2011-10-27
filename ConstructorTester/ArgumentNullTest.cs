@@ -68,7 +68,7 @@ namespace ConstructorTester
             foreach (var parameterType in parameterInfo.Select(x => x.ParameterType))
             {
                 if (parameterType.IsInterface ||
-                    (parameterType.IsAbstract && parameterType.IsPublic) )
+                    (parameterType.IsAbstract && parameterType.IsPublic))
                 {
                     parameters.Add(MockRepository.GenerateStub(parameterType));
                 }
@@ -81,6 +81,11 @@ namespace ConstructorTester
 
                     if (implementation != null)
                         parameters.Add(implementation);
+                }
+                else if (Nullable.GetUnderlyingType(parameterType) != null)
+                {
+                    var nullType = Nullable.GetUnderlyingType(parameterType);
+                    parameters.Add(Convert.ChangeType("1337", nullType));
                 }
                 else if (parameterType.IsValueType)
                 {

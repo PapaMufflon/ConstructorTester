@@ -80,6 +80,18 @@ namespace ConstructorTesterTests
         }
 
         [TestMethod]
+        public void When_given_an_nullable_argument_Then_it_should_handle_this()
+        {
+            ArgumentNullTest.Execute(typeof(ClassWithNullableArgument));
+        }
+
+        [TestMethod]
+        public void When_given_a_constructor_with_a_list_Then_it_should_handle_this()
+        {
+            ArgumentNullTest.Execute(typeof(ClassWithList));
+        }
+
+        [TestMethod]
         public void When_given_a_constructor_with_an_internal_abstract_class_as_argument_and_an_implementation_for_that_Then_it_should_handle_this()
         {
             ArgumentNullTest.Register<LonlyAbstractBaseClass, ImplementationForLonlyAbstractBaseClass>();
@@ -95,12 +107,10 @@ namespace ConstructorTesterTests
         {
             ArgumentNullTest.Execute(typeof(AbstractBaseClass));
         }
-
         [TestMethod]
         public void When_given_an_assembly_with_several_classes_Then_it_should_handle_this()
         {
             ArgumentNullTest.Execute(System.Reflection.Assembly.GetExecutingAssembly());
         }
     }
-
 }

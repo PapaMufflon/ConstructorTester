@@ -62,6 +62,8 @@
     <Compile Include="TestClasses\ClassWithInternalAbstractArgument.cs" />
     <Compile Include="TestClasses\ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly.cs" />
     <Compile Include="TestClasses\ClassWithInternalConstructorAndOneClassParameter.cs" />
+    <Compile Include="TestClasses\ClassWithList.cs" />
+    <Compile Include="TestClasses\ClassWithNullableArgument.cs" />
     <Compile Include="TestClasses\ClassWithOneClassParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneInterfaceParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneStringParameter.cs" />
