@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Rhino.Mocks;
@@ -95,6 +96,14 @@ namespace ConstructorTester
                 {
                     parameters.Add("");
                 }
+                else if (parameterType.BaseType == typeof(MulticastDelegate))
+                {
+                    var returnType = GetDelegateReturnType(parameterType);
+                    var handler = new DynamicMethod("", returnType, GetDelegateParameterTypes(parameterType));
+
+                    handler.GetILGenerator().Emit(OpCodes.Ret);
+                    parameters.Add(handler.CreateDelegate(parameterType));
+                }
                 else
                 {
                     var constructor = parameterType.GetConstructors()[0];
@@ -119,6 +128,24 @@ namespace ConstructorTester
             }
 
             throw new ArgumentException("Cannot find a class implementing " + internalAbstractType);
+        }
+
+        private static Type GetDelegateReturnType(Type d)
+        {
+            var invoke = d.GetMethod("Invoke");
+            if (invoke == null)
+                throw new ApplicationException("Not a delegate.");
+
+            return invoke.ReturnType;
+        }
+
+        private static Type[] GetDelegateParameterTypes(Type d)
+        {
+            var invoke = d.GetMethod("Invoke");
+            if (invoke == null)
+                throw new ApplicationException("Not a delegate.");
+
+            return invoke.GetParameters().Select(x => x.ParameterType).ToArray();
         }
 
         private static void TestParameters(ConstructorInfo constructor, object[] parameters, string classUnderTest)

@@ -2,9 +2,9 @@ namespace ConstructorTesterTests.TestClasses
 {
     internal class ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly
     {
-        public ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly(LonlyAbstractBaseClass foo)
+        public ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly(LonelyAbstractBaseClass foo)
         {
-            Guard.AssertNotNull(foo, typeof(LonlyAbstractBaseClass));
+            Guard.AssertNotNull(foo, typeof(LonelyAbstractBaseClass));
         }
     }
 }

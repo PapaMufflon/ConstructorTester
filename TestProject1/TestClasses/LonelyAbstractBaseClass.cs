@@ -1,6 +1,6 @@
 namespace ConstructorTesterTests.TestClasses
 {
-    internal abstract class LonlyAbstractBaseClass
+    internal abstract class LonelyAbstractBaseClass
     {
     }
 }
