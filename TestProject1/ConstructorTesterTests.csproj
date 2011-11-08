@@ -66,18 +66,19 @@
     <Compile Include="TestClasses\ClassWithInternalConstructorAndOneClassParameter.cs" />
     <Compile Include="TestClasses\ClassWithList.cs" />
     <Compile Include="TestClasses\ClassWithNullableArgument.cs" />
+    <Compile Include="TestClasses\ClassWithNullableArgumentInconvertibleFromString.cs" />
     <Compile Include="TestClasses\ClassWithOneClassParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneInterfaceParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneStringParameter.cs" />
     <Compile Include="TestClasses\ClassWithOneValueParameter.cs" />
     <Compile Include="TestClasses\ClassWithoutWrittenConstructor.cs" />
     <Compile Include="TestClasses\ClassWithTwoConstructors.cs" />
-    <Compile Include="TestClasses\Guard.cs" />
     <Compile Include="TestClasses\IInterface.cs" />
     <Compile Include="TestClasses\InternalClass.cs" />
     <Compile Include="TestClasses\ClassBasedOnAbstractBaseClass.cs" />
     <Compile Include="TestClasses\LonelyAbstractBaseClass.cs" />
     <Compile Include="TestClasses\PublicAbstractBaseClass.cs" />
+    <Compile Include="TestClasses\PublicAbstractBaseClassImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

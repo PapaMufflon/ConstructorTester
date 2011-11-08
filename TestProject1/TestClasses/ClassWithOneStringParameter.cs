@@ -2,9 +2,6 @@
 {
     public class ClassWithOneStringParameter
     {
-        public ClassWithOneStringParameter(string s)
-        {
-            Guard.AssertNotNull(s, typeof(string));
-        }
+        public ClassWithOneStringParameter(string s) { }
     }
 }

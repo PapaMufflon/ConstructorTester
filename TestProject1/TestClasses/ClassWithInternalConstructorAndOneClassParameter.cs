@@ -2,9 +2,6 @@
 {
     public class ClassWithInternalConstructorAndOneClassParameter
     {
-        internal ClassWithInternalConstructorAndOneClassParameter(ClassWithDefaultConstructor c)
-        {
-            Guard.AssertNotNull(c, typeof(ClassWithDefaultConstructor));
-        }
+        internal ClassWithInternalConstructorAndOneClassParameter(ClassWithDefaultConstructor c) { }
     }
 }

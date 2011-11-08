@@ -2,9 +2,6 @@
 {
     public class ClassWithOneValueParameter
     {
-        public ClassWithOneValueParameter(int i)
-        {
-
-        }
+        public ClassWithOneValueParameter(int i) { }
     }
 }

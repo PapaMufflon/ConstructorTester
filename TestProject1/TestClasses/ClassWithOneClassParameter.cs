@@ -2,9 +2,6 @@
 {
     public class ClassWithOneClassParameter
     {
-        public ClassWithOneClassParameter(ClassWithoutWrittenConstructor c)
-        {
-            Guard.AssertNotNull(c, typeof(ClassWithoutWrittenConstructor));
-        }
+        public ClassWithOneClassParameter(ClassWithoutWrittenConstructor c) { }
     }
 }

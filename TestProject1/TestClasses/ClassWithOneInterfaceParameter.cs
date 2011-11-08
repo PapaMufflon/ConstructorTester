@@ -2,9 +2,6 @@
 {
     public class ClassWithOneInterfaceParameter
     {
-        public ClassWithOneInterfaceParameter(IInterface foo)
-        {
-            Guard.AssertNotNull(foo, typeof(IInterface));
-        }
+        public ClassWithOneInterfaceParameter(IInterface foo) { }
     }
 }

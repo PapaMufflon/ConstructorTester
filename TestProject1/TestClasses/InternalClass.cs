@@ -2,9 +2,6 @@
 {
     internal class InternalClass
     {
-        public InternalClass(ClassWithoutWrittenConstructor c)
-        {
-            Guard.AssertNotNull(c, typeof(ClassWithoutWrittenConstructor));
-        }
+        public InternalClass(ClassWithoutWrittenConstructor c) { }
     }
 }

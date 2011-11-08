@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
 using Rhino.Mocks;
 
 namespace ConstructorTester
 {
     public class ArgumentNullTest
     {
+        /// <summary>
+        /// If set to <c>true</c>, <c>Nullable&lt;T&gt;</c> should also be checked for not null.
+        /// </summary>
+        public static bool TestNullables { get; set; }
+
         private static Action<string> _failedAssertionAction;
-        private static IWindsorContainer _container = new WindsorContainer();
+        private static readonly Dictionary<Type, object> _container = new Dictionary<Type, object>();
 
         /// <summary>
         /// If a parameter is found, which is not checked for null, this action is invoked.
@@ -24,7 +27,7 @@ namespace ConstructorTester
             private get
             {
                 if (_failedAssertionAction == null)
-                    _failedAssertionAction = s => Console.WriteLine(s);
+                    _failedAssertionAction = Console.WriteLine;
 
                 return _failedAssertionAction;
             }
@@ -69,7 +72,9 @@ namespace ConstructorTester
             foreach (var parameterType in parameterInfo.Select(x => x.ParameterType))
             {
                 if (parameterType.IsInterface ||
-                    (parameterType.IsAbstract && parameterType.IsPublic))
+                    (parameterType.IsAbstract &&
+                     parameterType.IsPublic &&
+                     parameterType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Where(x => x.IsPublic).Count() > 0))
                 {
                     parameters.Add(MockRepository.GenerateStub(parameterType));
                 }
@@ -77,8 +82,8 @@ namespace ConstructorTester
                 {
                     var implementation = SearchImplementation(parameterType);
 
-                    if (implementation == null)
-                        implementation = _container.Resolve(parameterType);
+                    if (implementation == null && _container.ContainsKey(parameterType))
+                        implementation = _container[parameterType];
 
                     if (implementation != null)
                         parameters.Add(implementation);
@@ -86,7 +91,7 @@ namespace ConstructorTester
                 else if (Nullable.GetUnderlyingType(parameterType) != null)
                 {
                     var nullType = Nullable.GetUnderlyingType(parameterType);
-                    parameters.Add(Convert.ChangeType("1337", nullType));
+                    parameters.Add(Convert.ChangeType(Activator.CreateInstance(nullType), nullType));
                 }
                 else if (parameterType.IsValueType)
                 {
@@ -119,7 +124,7 @@ namespace ConstructorTester
         {
             foreach (var type in internalAbstractType.Assembly.GetTypes())
             {
-                if (type.BaseType == internalAbstractType)
+                if (type.BaseType == internalAbstractType && type.GetConstructors().Count() > 0)
                 {
                     var constructor = type.GetConstructors()[0];
                     var parametersForConstructor = GetParameters(constructor.GetParameters());
@@ -152,7 +157,10 @@ namespace ConstructorTester
         {
             for (int parameterCounter = 0; parameterCounter < parameters.Length; parameterCounter++)
             {
-                if (!parameters[parameterCounter].GetType().IsValueType)
+                var parameterType = constructor.GetParameters()[parameterCounter].ParameterType;
+
+                if (!parameterType.IsValueType || 
+                    (TestNullables && Nullable.GetUnderlyingType(parameterType) != null))
                     TestOneParameterForNull(constructor, parameters, parameterCounter, classUnderTest);
             }
         }
@@ -184,7 +192,16 @@ namespace ConstructorTester
             where TImplementation : TBase
             where TBase : class
         {
-            _container.Register(Component.For<TBase>().ImplementedBy<TImplementation>());
+            if (_container.ContainsKey(typeof(TBase)))
+                _container.Remove(typeof(TBase));
+
+            var constructor = typeof(TImplementation).GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).FirstOrDefault();
+
+            if (constructor != null)
+            {
+                var parameters = GetParameters(constructor.GetParameters());
+                _container[typeof(TBase)] = constructor.Invoke(parameters);
+            }
         }
     }
 }

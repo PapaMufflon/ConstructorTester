@@ -2,9 +2,6 @@
 {
     internal abstract class AbstractBaseClass
     {
-        protected AbstractBaseClass(ClassWithoutWrittenConstructor c)
-        {
-            Guard.AssertNotNull(c, typeof(ClassWithoutWrittenConstructor));
-        }
+        protected AbstractBaseClass(ClassWithoutWrittenConstructor c) { }
     }
 }

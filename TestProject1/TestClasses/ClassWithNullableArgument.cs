@@ -2,9 +2,6 @@ namespace ConstructorTesterTests.TestClasses
 {
     public class ClassWithNullableArgument
     {
-        public ClassWithNullableArgument(int? foo)
-        {
-            
-        }
+        public ClassWithNullableArgument(int? foo) { }
     }
 }
