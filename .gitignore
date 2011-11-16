@@ -3,3 +3,13 @@ _ReSharper*
 CodeNinjaSpy.5.1.ReSharper.user
 CodeNinjaSpy/bin/*
 CodeNinjaSpy/obj/*
+ConstructorTester/bin/*
+ConstructorTester/*.nupkg
+ConstructorTester/obj/*
+TestClassesForTests/bin/*
+TestClassesForTests/obj/*
+TestClassesWithInternalsVisibleTrueForTests/bin/*
+TestClassesWithInternalsVisibleTrueForTests/obj/*
+TestProject1/bin/*
+TestProject1/obj/*
+ConstructorTester.6.0.ReSharper.user
