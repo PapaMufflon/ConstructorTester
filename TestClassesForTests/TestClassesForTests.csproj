@@ -3,14 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A15246B-78DF-4C81-8E68-C4D555CB75B3}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF382AD6-66CE-4E63-819B-9F3965CEAB27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConstructorTester</RootNamespace>
-    <AssemblyName>ConstructorTester</AssemblyName>
+    <RootNamespace>TestClassesForTests</RootNamespace>
+    <AssemblyName>TestClassesForTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,14 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentNullTest.cs" />
+    <Compile Include="ClassWithAbstractArgument.cs" />
+    <Compile Include="ClassWithByRefArgument.cs" />
+    <Compile Include="ClassWithDefaultConstructor.cs" />
+    <Compile Include="ClassWithDelegate.cs" />
+    <Compile Include="ClassWithEnumParameter.cs" />
+    <Compile Include="ClassWithInternalConstructorAndOneClassParameter.cs" />
+    <Compile Include="ClassWithList.cs" />
+    <Compile Include="ClassWithNullableArgument.cs" />
+    <Compile Include="ClassWithNullableArgumentInconvertibleFromString.cs" />
+    <Compile Include="ClassWithOneClassParameter.cs" />
+    <Compile Include="ClassWithOneInterfaceParameter.cs" />
+    <Compile Include="ClassWithOneStringParameter.cs" />
+    <Compile Include="ClassWithOneValueParameter.cs" />
+    <Compile Include="ClassWithoutWrittenConstructor.cs" />
+    <Compile Include="ClassWithTwoConstructors.cs" />
+    <Compile Include="IInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ConstructorTester.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
+    <Compile Include="PublicAbstractBaseClass.cs" />
+    <Compile Include="PublicAbstractBaseClassImpl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
