@@ -13,3 +13,6 @@ TestClassesWithInternalsVisibleTrueForTests/obj/*
 TestProject1/bin/*
 TestProject1/obj/*
 ConstructorTester.6.0.ReSharper.user
+ConstructorTester.sln.docstates.suo
+ConstructorTester.suo
+Packages.dgml
