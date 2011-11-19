@@ -16,3 +16,5 @@ ConstructorTester.6.0.ReSharper.user
 ConstructorTester.sln.docstates.suo
 ConstructorTester.suo
 Packages.dgml
+ConstructorTester.Spec/bin/*
+ConstructorTester.Spec/obj/*

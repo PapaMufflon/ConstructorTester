@@ -21,31 +21,10 @@ namespace ConstructorTester
         /// </summary>
         public static bool TestInternals { get; set; }
 
-        private static Action<string> _failedAssertionAction;
+        private static List<string> _failedAssertions = new List<string>();
         private static readonly Dictionary<Type, object> _container = new Dictionary<Type, object>();
         private static readonly List<Type> _foundImplementation = new List<Type>();
         private static readonly List<Type> _typesNotToTest = new List<Type>();
-
-        /// <summary>
-        /// If a parameter is found, which is not checked for null, this action is invoked.
-        /// You can set your Assertion here, for example:
-        /// ArgumentNullTest.FailedAssertionAction = message => Assert.Fail(message);
-        /// </summary>
-        public static Action<string> FailedAssertionAction
-        {
-            private get
-            {
-                if (_failedAssertionAction == null)
-                    _failedAssertionAction = Console.WriteLine;
-
-                return _failedAssertionAction;
-            }
-
-            set
-            {
-                _failedAssertionAction = value;
-            }
-        }
 
         /// <summary>
         /// Tests all classes in an assembly and all constructors within these classes
@@ -54,10 +33,14 @@ namespace ConstructorTester
         /// <param name="assemblyUnderTest"><c>Assembly</c> to check.</param>
         public static void Execute(Assembly assemblyUnderTest)
         {
+            _failedAssertions.Clear();
+
             foreach (var classUnderTest in assemblyUnderTest.GetTypes())
                 TestType(classUnderTest);
 
             _typesNotToTest.Clear();
+
+            EvaluateResult();
         }
 
         /// <summary>
@@ -66,9 +49,19 @@ namespace ConstructorTester
         /// <param name="classUnderTest"><c>Type</c> to check.</param>
         public static void Execute(Type classUnderTest)
         {
+            _failedAssertions.Clear();
+
             TestType(classUnderTest);
 
             _typesNotToTest.Clear();
+
+            EvaluateResult();
+        }
+
+        private static void EvaluateResult()
+        {
+            if (_failedAssertions.Count > 0)
+                throw new ArgumentException(_failedAssertions.Aggregate("", (s, t) => s + Environment.NewLine + t).Substring(Environment.NewLine.Length));
         }
 
         private static void TestType(Type classUnderTest)
@@ -88,19 +81,19 @@ namespace ConstructorTester
 
                     if (constructor.ContainsGenericParameters)
                     {
-                        FailedAssertionAction.Invoke("Sorry, ConstructorTester can't test generic Constructors. Use the DoNotTest-method to omit this class.");
+                        _failedAssertions.Add("Sorry, ConstructorTester can't test generic Constructors. Use the DoNotTest-method to omit this class.");
                     }
                     else if (constructor.GetParameters().Any(x => x.ParameterType.IsPointer))
                     {
-                        FailedAssertionAction.Invoke("Sorry, ConstructorTester can't test Constructors containing pointer-arguments. Use the DoNotTest-method to omit this class.");
+                        _failedAssertions.Add("Sorry, ConstructorTester can't test Constructors containing pointer-arguments. Use the DoNotTest-method to omit this class.");
                     }
                     else if (constructor.GetParameters().Any(x => x.ParameterType == typeof(RuntimeArgumentHandle)))
                     {
-                        FailedAssertionAction.Invoke("Sorry, ConstructorTester can't test Constructors containing RuntimeArgumentHandle-arguments. Use the DoNotTest-method to omit this class.");
+                        _failedAssertions.Add("Sorry, ConstructorTester can't test Constructors containing RuntimeArgumentHandle-arguments. Use the DoNotTest-method to omit this class.");
                     }
                     else if (constructor.GetParameters().Any(x => x.ParameterType.IsByRef))
                     {
-                        FailedAssertionAction.Invoke("Sorry, ConstructorTester can't test Constructors containing ByRef-arguments. Use the DoNotTest-method to omit this class.");
+                        _failedAssertions.Add("Sorry, ConstructorTester can't test Constructors containing ByRef-arguments. Use the DoNotTest-method to omit this class.");
                     }
                     else
                     {
@@ -109,7 +102,7 @@ namespace ConstructorTester
                         if (parameters != null)
                             TestParameters(constructor, parameters, classUnderTest.ToString());
                         else
-                            FailedAssertionAction.Invoke("Could not find all parameters for constructor " + constructor);
+                            _failedAssertions.Add("Could not find all parameters for constructor " + constructor);
                     }
                 }
             }
@@ -227,6 +220,8 @@ namespace ConstructorTester
                 {
                     try
                     {
+                        var kackCode = false;
+
                         foreach (var constructor in parameterType.GetConstructors())
                         {
                             if (ProducesDependencyCircle(constructor.GetParameters().Select(x => x.ParameterType)))
@@ -257,13 +252,15 @@ namespace ConstructorTester
 
                                 if (constructorParameters != null)
                                 {
+                                    kackCode = true;
                                     parameters.Add(constructor.Invoke(constructorParameters));
                                     break;
                                 }
                             }
                         }
 
-                        return null;
+                        if (!kackCode)
+                            return null;
                     }
                     catch (Exception e)
                     {
@@ -322,7 +319,7 @@ namespace ConstructorTester
                         (current, exception) =>
                         current + CompileErrorMessage(exceptionsOfFoundImplementations[exception], exception));
 
-            FailedAssertionAction.Invoke(errorMessage);
+            _failedAssertions.Add(errorMessage);
             return null;
         }
 
@@ -405,7 +402,10 @@ namespace ConstructorTester
             }
 
             if (!catched)
-                FailedAssertionAction.Invoke(string.Format("Parameter number {0} of constructor {1} of class {2} was not tested for null.", parameterToTest, constructor, classUnderTest));
+                _failedAssertions.Add(string.Format("Class {0} makes trouble: parameter {1} of constructor {2} was not tested for null.",
+                    classUnderTest,
+                    parameterToTest + 1,
+                    constructor));
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace ConstructorTester
         /// </summary>
         /// <param name="type">Type to leave out for testing.</param>
         /// <param name="reason">Give a reason why not to test this type.</param>
-        public static void DoNotTest(Type type, string reason)
+        public static void DoNotIncludeInNextTest(Type type, string reason)
         {
             if (string.IsNullOrEmpty(reason))
                 throw new ArgumentNullException("reason", "Don't be lazy - give me a reason!");
