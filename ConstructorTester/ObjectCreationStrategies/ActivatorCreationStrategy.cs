@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class ActivatorCreationStrategy : IObjectCreationStrategy
+    internal class ActivatorCreationStrategy : ObjectCreationStrategyBase
     {
         private readonly ObjectBuilder _objectBuilder;
 
@@ -12,12 +12,12 @@ namespace ConstructorTester.ObjectCreationStrategies
             _objectBuilder = objectBuilder;
         }
 
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type.IsClass && !type.IsAbstract && type.GetConstructors().Length > 0;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             foreach (var constructorInfo in type.GetConstructors())
             {

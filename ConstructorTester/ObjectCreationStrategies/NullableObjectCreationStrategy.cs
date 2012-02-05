@@ -2,14 +2,14 @@ using System;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class NullableObjectCreationStrategy : IObjectCreationStrategy
+    internal class NullableObjectCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return Nullable.GetUnderlyingType(type) != null;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             var nullType = Nullable.GetUnderlyingType(type);
             return Convert.ChangeType(Activator.CreateInstance(nullType), nullType);

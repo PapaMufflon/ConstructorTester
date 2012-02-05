@@ -3,14 +3,14 @@ using System.Runtime.Serialization;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class StructCreationStrategy : IObjectCreationStrategy
+    internal class StructCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type.IsValueType && !type.IsEnum && !type.IsPrimitive;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return FormatterServices.GetUninitializedObject(type);
         }

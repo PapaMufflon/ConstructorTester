@@ -21,12 +21,15 @@ namespace ConstructorTester
                     select objectCreationStrategy.Create(type)).FirstOrDefault();
         }
 
-        /// <summary>
-        /// Just to be able to refactor TypeTester.GetParameters in a TDD-manner. Delete this afterwards.
-        /// </summary>
         public bool CanBuildObject(Type type)
         {
             return ObjectCreationStrategies.Any(x => x.CanCreate(type));
+        }
+
+        public void Reset()
+        {
+            foreach (var objectCreationStrategy in ObjectCreationStrategies)
+                objectCreationStrategy.Reset();
         }
     }
 }

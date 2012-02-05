@@ -2,14 +2,14 @@ using System;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class StringCreationStrategy : IObjectCreationStrategy
+    internal class StringCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type == typeof (string);
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return "foo";
         }

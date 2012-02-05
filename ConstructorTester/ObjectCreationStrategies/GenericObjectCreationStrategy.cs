@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class GenericObjectCreationStrategy : IObjectCreationStrategy
+    internal class GenericObjectCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type.IsGenericTypeDefinition;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return type.MakeGenericType(GetDelegateParameterTypes(type));
         }

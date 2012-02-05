@@ -6,5 +6,7 @@ namespace ConstructorTester.ObjectCreationStrategies
     {
         bool CanCreate(Type type);
         object Create(Type type);
+
+        void Reset();
     }
 }

@@ -2,14 +2,14 @@ using System;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class ValueTypeCreationStrategy : IObjectCreationStrategy
+    internal class ValueTypeCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type.IsValueType;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return Activator.CreateInstance(type);
         }

@@ -287,4 +287,18 @@ namespace ConstructorTester.Spec.SupportedTypes
         It should_tell_me_that_this_is_not_supported_yet = () =>
             _exception.Message.ShouldStartWith("Sorry, ConstructorTester can't test Constructors containing pointer-arguments. Use the DoNotTest-method to omit this class.");
     }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_ctor_leading_to_an_endless_loop : WithSubject<object>
+    {
+        Establish context = () => With<TestInternalsContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWantingItself)));
+
+        protected static Exception _exception;
+        Behaves_like<One_failed_assertion> _;
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself) was not tested for null.");
+    }
 }

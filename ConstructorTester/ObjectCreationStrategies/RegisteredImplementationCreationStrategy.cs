@@ -2,7 +2,7 @@ using System;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class RegisteredImplementationCreationStrategy : IObjectCreationStrategy
+    internal class RegisteredImplementationCreationStrategy : ObjectCreationStrategyBase
     {
         private readonly TestConfig _testConfig;
 
@@ -11,12 +11,12 @@ namespace ConstructorTester.ObjectCreationStrategies
             _testConfig = testConfig;
         }
 
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return _testConfig.HasImplementationFor(type);
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return _testConfig.GetImplementationFor(type);
         }

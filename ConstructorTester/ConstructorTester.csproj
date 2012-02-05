@@ -65,6 +65,7 @@
     <Compile Include="ObjectCreationStrategies\IObjectCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\MockObjectCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\NullableObjectCreationStrategy.cs" />
+    <Compile Include="ObjectCreationStrategies\ObjectCreationStrategyBase.cs" />
     <Compile Include="ObjectCreationStrategies\RegisteredImplementationCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\SearchForAnImplementationCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\StringCreationStrategy.cs" />

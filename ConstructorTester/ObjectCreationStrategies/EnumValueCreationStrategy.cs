@@ -2,14 +2,14 @@ using System;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
-    internal class EnumValueCreationStrategy : IObjectCreationStrategy
+    internal class EnumValueCreationStrategy : ObjectCreationStrategyBase
     {
-        public bool CanCreate(Type type)
+        public override bool CanCreate(Type type)
         {
             return type.IsEnum;
         }
 
-        public object Create(Type type)
+        public override object Create(Type type)
         {
             return Enum.GetValues(type).GetValue(0);
         }

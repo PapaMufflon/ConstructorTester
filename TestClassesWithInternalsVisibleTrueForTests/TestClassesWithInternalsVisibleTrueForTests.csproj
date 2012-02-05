@@ -43,6 +43,7 @@
     <Compile Include="AbstractBaseClass.cs" />
     <Compile Include="AbstractBaseClassImpl.cs" />
     <Compile Include="ClassBasedOnAbstractBaseClass.cs" />
+    <Compile Include="ClassWantingItself.cs" />
     <Compile Include="ClassWithInternalAbstractArgument.cs" />
     <Compile Include="ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly.cs" />
     <Compile Include="ClassWithoutWrittenConstructor.cs" />
