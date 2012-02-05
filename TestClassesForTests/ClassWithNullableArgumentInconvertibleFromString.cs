@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace ConstructorTesterTests.TestClasses
+namespace TestClassesForTests
 {
     public class ClassWithNullableArgumentInconvertibleFromString
     {

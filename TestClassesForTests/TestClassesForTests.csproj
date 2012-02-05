@@ -47,6 +47,7 @@
     <Compile Include="ClassWithEnumParameter.cs" />
     <Compile Include="ClassWithInternalConstructorAndOneClassParameter.cs" />
     <Compile Include="ClassWithList.cs" />
+    <Compile Include="ClassWithNoImplementationForItsAbstractArgument.cs" />
     <Compile Include="ClassWithNullableArgument.cs" />
     <Compile Include="ClassWithNullableArgumentInconvertibleFromString.cs" />
     <Compile Include="ClassWithOneClassParameter.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="ClassWithTwoConstructors.cs" />
     <Compile Include="IInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicAbsractBaseClassWithoutImplementation.cs" />
     <Compile Include="PublicAbstractBaseClass.cs" />
     <Compile Include="PublicAbstractBaseClassImpl.cs" />
   </ItemGroup>

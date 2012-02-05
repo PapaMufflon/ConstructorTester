@@ -1,4 +1,4 @@
-﻿namespace ConstructorTesterTests.TestClasses
+﻿namespace TestClassesWithInternalsVisibleTrueForTests
 {
     public class ClassWithoutWrittenConstructor
     {

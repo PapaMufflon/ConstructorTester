@@ -1,7 +1,7 @@
-namespace ConstructorTesterTests.TestClasses
+namespace TestClassesWithInternalsVisibleTrueForTests
 {
     internal class ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly
     {
-        public ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly(LonelyAbstractBaseClass foo) { }
+        public ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly(InternalAbstractBaseClassWithoutImplementation foo) { }
     }
 }

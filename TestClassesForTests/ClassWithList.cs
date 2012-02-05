@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ConstructorTesterTests.TestClasses
+namespace TestClassesForTests
 {
     public class ClassWithList
     {

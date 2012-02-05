@@ -1,4 +1,4 @@
-namespace ConstructorTesterTests.TestClasses
+namespace TestClassesForTests
 {
     public abstract class PublicAbstractBaseClass
     {

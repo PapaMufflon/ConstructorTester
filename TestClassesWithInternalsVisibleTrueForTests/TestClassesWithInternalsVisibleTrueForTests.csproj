@@ -47,7 +47,7 @@
     <Compile Include="ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly.cs" />
     <Compile Include="ClassWithoutWrittenConstructor.cs" />
     <Compile Include="InternalClass.cs" />
-    <Compile Include="LonelyAbstractBaseClass.cs" />
+    <Compile Include="InternalAbstractBaseClassWithoutImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

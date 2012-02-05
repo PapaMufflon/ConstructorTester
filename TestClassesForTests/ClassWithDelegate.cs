@@ -1,6 +1,6 @@
 using System;
 
-namespace ConstructorTesterTests.TestClasses
+namespace TestClassesForTests
 {
     public class ClassWithDelegate
     {
