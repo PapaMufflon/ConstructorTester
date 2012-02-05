@@ -29,7 +29,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithOneClassParameter makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithOneClassParameter: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -43,7 +43,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithInternalConstructorAndOneClassParameter makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithDefaultConstructor) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithInternalConstructorAndOneClassParameter: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithDefaultConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -57,7 +57,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithOneInterfaceParameter makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.IInterface) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithOneInterfaceParameter: parameter 1 of constructor Void .ctor(TestClassesForTests.IInterface) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -82,7 +82,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.InternalClass makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.InternalClass: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -96,10 +96,10 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<Two_failed_assertions> _;
 
         It should_tell_me_that_the_first_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldContain("Class TestClassesWithInternalsVisibleTrueForTests.ClassBasedOnAbstractBaseClass makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor, TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldContain("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassBasedOnAbstractBaseClass: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor, TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
 
         It should_tell_me_that_the_second_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldContain("Class TestClassesWithInternalsVisibleTrueForTests.ClassBasedOnAbstractBaseClass makes trouble: parameter 2 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor, TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldContain("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassBasedOnAbstractBaseClass: parameter 2 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor, TestClassesWithInternalsVisibleTrueForTests.ClassWithoutWrittenConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -113,7 +113,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithOneStringParameter makes trouble: parameter 1 of constructor Void .ctor(System.String) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithOneStringParameter: parameter 1 of constructor Void .ctor(System.String) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -127,13 +127,13 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<Three_failed_assertions> _;
 
         It should_tell_me_that_the_argument_of_the_first_ctor_was_not_checked_for_null = () =>
-            _exception.Message.ShouldContain("Class TestClassesForTests.ClassWithTwoConstructors makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldContain("Found a weakness in class TestClassesForTests.ClassWithTwoConstructors: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
 
         It should_tell_me_that_the_first_argument_of_the_second_ctor_was_not_checked_for_null = () =>
-            _exception.Message.ShouldContain("Class TestClassesForTests.ClassWithTwoConstructors makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor, TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldContain("Found a weakness in class TestClassesForTests.ClassWithTwoConstructors: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor, TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
 
         It should_tell_me_that_the_second_argument_of_the_second_ctor_was_not_checked_for_null = () =>
-            _exception.Message.ShouldContain("Class TestClassesForTests.ClassWithTwoConstructors makes trouble: parameter 2 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor, TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldContain("Found a weakness in class TestClassesForTests.ClassWithTwoConstructors: parameter 2 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor, TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -147,7 +147,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithNoImplementationForItsAbstractArgument makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.PublicAbsractBaseClassWithoutImplementation) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNoImplementationForItsAbstractArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.PublicAbsractBaseClassWithoutImplementation) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -161,7 +161,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgument makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractBaseClass) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgument: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractBaseClass) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -175,7 +175,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithNullableArgument makes trouble: parameter 1 of constructor Void .ctor(System.Nullable`1[System.Int32]) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNullableArgument: parameter 1 of constructor Void .ctor(System.Nullable`1[System.Int32]) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -189,7 +189,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithNullableArgumentInconvertibleFromString makes trouble: parameter 1 of constructor Void .ctor(System.Nullable`1[System.ComponentModel.ListSortDirection]) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNullableArgumentInconvertibleFromString: parameter 1 of constructor Void .ctor(System.Nullable`1[System.ComponentModel.ListSortDirection]) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -203,7 +203,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithList makes trouble: parameter 1 of constructor Void .ctor(System.Collections.Generic.List`1[TestClassesForTests.ClassWithOneClassParameter]) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithList: parameter 1 of constructor Void .ctor(System.Collections.Generic.List`1[TestClassesForTests.ClassWithOneClassParameter]) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -228,7 +228,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithDelegate makes trouble: parameter 1 of constructor Void .ctor(System.Func`2[System.String,System.Int32]) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithDelegate: parameter 1 of constructor Void .ctor(System.Func`2[System.String,System.Int32]) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -299,6 +299,6 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself) was not tested for null.");
     }
 }

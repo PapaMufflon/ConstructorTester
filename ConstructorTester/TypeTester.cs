@@ -88,7 +88,7 @@ namespace ConstructorTester
                 }
                 else
                 {
-                    _failedAssertions.Add(string.Format("Class {0} makes trouble: cannot find an implementation of parameter {1} of constructor {2}.",
+                    _failedAssertions.Add(string.Format("There was a problem when testing class {0}: cannot find an implementation for parameter {1} of constructor {2}.",
                                 constructor.DeclaringType, parameterCounter, constructor));
                 }
             }
@@ -128,7 +128,7 @@ namespace ConstructorTester
             }
 
             if (!catched)
-                _failedAssertions.Add(string.Format("Class {0} makes trouble: parameter {1} of constructor {2} was not tested for null.",
+                _failedAssertions.Add(string.Format("Found a weakness in class {0}: parameter {1} of constructor {2} was not tested for null.",
                     classUnderTest,
                     parameterToTest + 1,
                     constructor));

@@ -35,7 +35,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -55,7 +55,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly makes trouble: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -71,7 +71,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_no_suitable_implementation_was_found = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly makes trouble: cannot find an implementation of parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
+            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -92,7 +92,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_no_suitable_implementation_was_found = () =>
-            _exception.Message.ShouldEqual("Class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly makes trouble: cannot find an implementation of parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
+            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -129,7 +129,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Class TestClassesForTests.ClassWithOneClassParameter makes trouble: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithOneClassParameter: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]

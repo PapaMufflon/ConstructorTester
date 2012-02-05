@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClassesWithInternalsVis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructorTester.Spec", "ConstructorTester.Spec\ConstructorTester.Spec.csproj", "{678A6183-F531-4705-98C6-4BD2B4AE5907}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60766D45-37D9-4558-B114-ACEE10294D0E}"
+	ProjectSection(SolutionItems) = preProject
+		README.markdown = README.markdown
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
