@@ -9,14 +9,14 @@ namespace ConstructorTester
     internal class TypeTester
     {
         private readonly TestConfig _testConfig;
-        private readonly List<IConstraint> _constraints;
+        private readonly ConstraintsTester _constraintsTester;
         private readonly ObjectBuilder _objectBuilder;
         private readonly List<string> _failedAssertions = new List<string>();
 
-        public TypeTester(TestConfig testConfig, List<IConstraint> constraints, ObjectBuilder objectBuilder)
+        public TypeTester(TestConfig testConfig, ConstraintsTester constraintsTester, ObjectBuilder objectBuilder)
         {
             _testConfig = testConfig;
-            _constraints = constraints;
+            _constraintsTester = constraintsTester;
             _objectBuilder = objectBuilder;
         }
 
@@ -25,7 +25,7 @@ namespace ConstructorTester
             _objectBuilder.Reset();
 
             _failedAssertions.Clear();
-            _failedAssertions.AddRange(EvaluateConstraints(type));
+            _failedAssertions.AddRange(_constraintsTester.EvaluateConstraints(type));
 
             if (_failedAssertions.Count == 0)
                 TestType(type);
@@ -33,28 +33,19 @@ namespace ConstructorTester
             return _failedAssertions;
         }
 
-        private ICollection<string> EvaluateConstraints(object @object)
-        {
-            return _constraints.Where(x => x.CanEvaluate(@object))
-                .Select(x => x.Evaluate(@object))
-                .Where(x => !string.IsNullOrEmpty(x))
-                .ToList();
-        }
-
         private void TestType(Type type)
         {
-            var bindingFlags = GetBindingFlags();
+            var bindingFlags = _testConfig.GetBindingFlags();
 
             foreach (var constructor in type.GetConstructors(bindingFlags))
             {
-                var failedAssertionsForCurrentConstructor = EvaluateConstraints(constructor);
+                object[] parameters;
+                var failedAssertionsForCurrentConstructor = _constraintsTester.EvaluateConstraints(constructor);
 
-                if (failedAssertionsForCurrentConstructor.Count() == 0)
+                if (!failedAssertionsForCurrentConstructor.Any() &&
+                    TryGetParameters(constructor, out parameters))
                 {
-                    var parameters = GetParameters(constructor);
-
-                    if (parameters != null)
-                        TestParameters(constructor, parameters, type.ToString());
+                    TestParameters(constructor, parameters, type.ToString());
                 }
                 else
                 {
@@ -63,37 +54,32 @@ namespace ConstructorTester
             }
         }
 
-        private BindingFlags GetBindingFlags()
+        private bool TryGetParameters(ConstructorInfo constructor, out object[] parameters)
         {
-            var bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-
-            if (_testConfig.TestInternals)
-                bindingFlags = bindingFlags | BindingFlags.NonPublic;
-
-            return bindingFlags;
-        }
-
-        private object[] GetParameters(ConstructorInfo constructor)
-        {
-            var parameters = new List<object>();
+            var result = true;
+            var tempParameters = new List<object>();
             var parameterCounter = 0;
 
             foreach (var parameterType in constructor.GetParameters().Select(x => x.ParameterType))
             {
                 parameterCounter++;
 
-                if (_objectBuilder.CanBuildObject(parameterType))
+                if (!_constraintsTester.ViolatesConstraints(parameterType) &&
+                    _objectBuilder.CanBuildObject(parameterType))
                 {
-                    parameters.Add(_objectBuilder.BuildObject(parameterType));
+                    tempParameters.Add(_objectBuilder.BuildObject(parameterType));
                 }
                 else
                 {
                     _failedAssertions.Add(string.Format("There was a problem when testing class {0}: cannot find an implementation for parameter {1} of constructor {2}.",
                                 constructor.DeclaringType, parameterCounter, constructor));
+                    result = false;
                 }
             }
 
-            return parameters.ToArray();
+            parameters = tempParameters.ToArray();
+
+            return result;
         }
 
         private void TestParameters(ConstructorInfo constructor, object[] parameters, string classUnderTest)

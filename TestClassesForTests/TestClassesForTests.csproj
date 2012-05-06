@@ -61,6 +61,8 @@
     <Compile Include="PublicAbsractBaseClassWithoutImplementation.cs" />
     <Compile Include="PublicAbstractBaseClass.cs" />
     <Compile Include="PublicAbstractBaseClassImpl.cs" />
+    <Compile Include="SerializableClass.cs" />
+    <Compile Include="SerializableClassAsConstructorArgument.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -133,6 +133,19 @@ namespace ConstructorTester.Spec.Features
     }
 
     [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_constraint_violating_type_in_a_constructor_of_a_constructor_parameter_When_testing_it : WithSubject<object>
+    {
+        private static Exception _exception;
+
+        Establish context = () => With<TestInternalsContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(System.Threading.Tasks.Task)));
+
+        It should_tell_me_that_no_suitable_implementation_was_found = () =>
+            _exception.Message.ShouldContain("7 of constructor Void .ctor(System.Object, System.Object, System.Threading.Tasks.Task, System.Threading.CancellationToken, System.Threading.Tasks.TaskCreationOptions, System.Threading.Tasks.InternalTaskOptions, System.Threading.Tasks.TaskScheduler)");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
     public class Given_an_assembly_with_several_classes_When_testing_it : WithSubject<object>
     {
         private static Exception _exception;
@@ -141,6 +154,24 @@ namespace ConstructorTester.Spec.Features
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter).Assembly));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(15);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(17);
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_the_System_assembly_When_testing_it : WithSubject<object>
+    {
+        private static Exception _exception;
+
+        Establish context = () =>
+        {
+            With<DefaultConfigurationContext>();
+
+            ArgumentNullTest.Register(typeof(string).Assembly);
+            ArgumentNullTest.Register(AppDomain.CurrentDomain.ActivationContext);
+        };
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(string).Assembly));
+
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(15);
     }
 }

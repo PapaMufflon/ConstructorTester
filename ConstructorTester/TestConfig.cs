@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ConstructorTester
 {
@@ -45,6 +46,16 @@ namespace ConstructorTester
                 throw new ArgumentException("There is no implementation registered for type " + type);
 
             return _container[type];
+        }
+
+        public BindingFlags GetBindingFlags()
+        {
+            var bindingFlags = BindingFlags.Public | BindingFlags.Instance;
+
+            if (TestInternals)
+                bindingFlags = bindingFlags | BindingFlags.NonPublic;
+
+            return bindingFlags;
         }
     }
 }

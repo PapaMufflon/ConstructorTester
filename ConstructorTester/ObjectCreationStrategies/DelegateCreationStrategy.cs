@@ -19,7 +19,9 @@ namespace ConstructorTester.ObjectCreationStrategies
             var handler = new DynamicMethod("", returnType, methodParameters, typeof(ArgumentNullTest));
             var generator = handler.GetILGenerator();
 
-            generator.Emit(OpCodes.Ldloc, 1);
+            if (returnType != typeof(void))
+                generator.Emit(OpCodes.Ldloc, 1);
+
             generator.Emit(OpCodes.Ret);
 
             return handler.CreateDelegate(type);

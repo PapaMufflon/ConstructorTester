@@ -12,8 +12,8 @@ namespace ConstructorTester.ObjectCreationStrategies
 
         private static bool IsMockable(Type type)
         {
-            return type.IsInterface ||
-                   (type.IsAbstract);
+            return (type.IsInterface || type.IsAbstract) &&
+                   !type.Attributes.HasFlag(System.Reflection.TypeAttributes.Serializable);
         }
 
         public override object Create(Type type)

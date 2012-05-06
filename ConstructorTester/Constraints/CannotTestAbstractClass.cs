@@ -18,7 +18,7 @@ namespace ConstructorTester.Constraints
                 throw new ArgumentException("Cannot evaluate objects that are not Type.");
 
             if (type.IsAbstract)
-                result = "Sorry, ConstructorTester can't test abstract classes. Use the DoNotTest-method to omit this class.";
+                result = string.Format("Sorry, ConstructorTester can't test abstract classes. Use the DoNotTest-method to omit this class ({0}).", type);
 
             return result;
         }

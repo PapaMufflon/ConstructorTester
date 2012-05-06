@@ -7,7 +7,7 @@ namespace ConstructorTester.ObjectCreationStrategies
     {
         public override bool CanCreate(Type type)
         {
-            return type.IsGenericTypeDefinition;
+            return type.IsGenericTypeDefinition && type.GetMethod("Invoke") != null;
         }
 
         public override object Create(Type type)

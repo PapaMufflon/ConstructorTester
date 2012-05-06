@@ -57,12 +57,13 @@ namespace ConstructorTester
             objectBuilder.ObjectCreationStrategies.AddRange(BuildObjectCreationStrategies());
 
             var testConfig = new TestConfig(objectBuilder);
+            var constraintsTester = new ConstraintsTester(BuildConstraints(testConfig), testConfig);
 
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
-            objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
-            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder));
+            objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder, constraintsTester));
+            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, constraintsTester));
 
-            var typeTester = new TypeTester(testConfig, BuildConstraints(testConfig), objectBuilder);
+            var typeTester = new TypeTester(testConfig, constraintsTester, objectBuilder);
             _argumentNullTest = new ArgumentNullTest(typeTester, testConfig);
         }
 
@@ -81,7 +82,7 @@ namespace ConstructorTester
             };
         }
 
-        private static List<IConstraint> BuildConstraints(TestConfig testConfig)
+        private static IEnumerable<IConstraint> BuildConstraints(TestConfig testConfig)
         {
             return new List<IConstraint>
             {
@@ -118,7 +119,9 @@ namespace ConstructorTester
             var results = new List<string>();
 
             foreach (var type in types.Where(x => !TypesNotToTest.Contains(x)))
+            {
                 results.AddRange(_typeTester.TestForNullArgumentExceptionsInConstructor(type));
+            }
 
             TypesNotToTest.Clear();
 

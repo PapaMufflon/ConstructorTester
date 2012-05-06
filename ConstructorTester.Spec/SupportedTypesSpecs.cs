@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Machine.Fakes;
 using Machine.Specifications;
 using TestClassesForTests;
@@ -242,7 +243,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_this_is_not_supported_yet = () =>
-            _exception.Message.ShouldEqual("Sorry, ConstructorTester can't test abstract classes. Use the DoNotTest-method to omit this class.");
+            _exception.Message.ShouldEqual("Sorry, ConstructorTester can't test abstract classes. Use the DoNotTest-method to omit this class (TestClassesWithInternalsVisibleTrueForTests.AbstractBaseClass).");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -300,5 +301,47 @@ namespace ConstructorTester.Spec.SupportedTypes
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
             _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself) was not tested for null.");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_ctor_with_a_serializable_class_argument : WithSubject<object>
+    {
+        Establish context = () => With<TestInternalsContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(SerializableClassAsConstructorArgument)));
+
+        protected static Exception _exception;
+        Behaves_like<One_failed_assertion> _;
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.SerializableClassAsConstructorArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.SerializableClass) was not tested for null.");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_ctor_with_a_serializable_class_argument_without_deserializer : WithSubject<object>
+    {
+        Establish context = () => With<TestInternalsContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(SerializableClassAsConstructorArgument)));
+
+        protected static Exception _exception;
+        Behaves_like<One_failed_assertion> _;
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.SerializableClassAsConstructorArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.SerializableClass) was not tested for null.");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_ActivationArguments : WithSubject<object>
+    {
+        Establish context = () => With<TestInternalsContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Threading.Tasks.Task))));
+
+        protected static Exception _exception;
+        private Behaves_like<One_failed_assertion> _;
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Found a weakness in class System.Threading.Timer: parameter 2 of constructor Void .ctor(TestClassesForTests.SerializableClass) was not tested for null.");
     }
 }

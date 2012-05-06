@@ -53,6 +53,7 @@
     <Compile Include="Constraints\CannotTestConstructorsWithRuntimeArgumentHandleArguments.cs" />
     <Compile Include="Constraints\CannotTestGenericConstructors.cs" />
     <Compile Include="Constraints\CannotTestInternalTypes.cs" />
+    <Compile Include="Constraints\ConstraintsTester.cs" />
     <Compile Include="Constraints\ConstructorInfoBaseConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
     <Compile Include="Constraints\NoImplementationForAbstractParametersAvailableConstraintImpl.cs" />

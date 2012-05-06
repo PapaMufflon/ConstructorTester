@@ -6,7 +6,7 @@ namespace ConstructorTester.ObjectCreationStrategies
     {
         public override bool CanCreate(Type type)
         {
-            return type == typeof (string);
+            return type == typeof (string) || type == typeof(object);
         }
 
         public override object Create(Type type)
