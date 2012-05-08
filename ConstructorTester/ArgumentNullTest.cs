@@ -60,7 +60,7 @@ namespace ConstructorTester
             var constraintsTester = new ConstraintsTester(BuildConstraints(testConfig), testConfig);
 
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
-            objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder, constraintsTester));
+            objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
             objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, constraintsTester));
 
             var typeTester = new TypeTester(testConfig, constraintsTester, objectBuilder);

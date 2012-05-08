@@ -8,20 +8,30 @@ namespace ConstructorTester.ObjectCreationStrategies
     internal class SearchForAnImplementationCreationStrategy : ObjectCreationStrategyBase
     {
         private readonly ObjectBuilder _objectBuilder;
-        private readonly ConstraintsTester _constraintsTester;
         private readonly List<Type> _alreadyCreatedTypes = new List<Type>();
+        private readonly List<Type> _alreadyLookedForTypes = new List<Type>();
 
-        public SearchForAnImplementationCreationStrategy(ObjectBuilder objectBuilder, ConstraintsTester constraintsTester)
+        public SearchForAnImplementationCreationStrategy(ObjectBuilder objectBuilder)
         {
             _objectBuilder = objectBuilder;
-            _constraintsTester = constraintsTester;
         }
 
         public override bool CanCreate(Type type)
         {
-            return FindImplementationsFor(type)
-                .Where(t => !_alreadyCreatedTypes.Contains(t))
-                .Any(t => !_constraintsTester.ViolatesConstraints(t) && _objectBuilder.CanBuildObject(t));
+            var implementations = FindImplementationsFor(type)
+                .Where(t => !_alreadyLookedForTypes.Contains(t));
+
+            foreach (var implementation in implementations)
+            {
+                _alreadyLookedForTypes.Add(implementation);
+
+                if (_objectBuilder.CanBuildObject(implementation))
+                    return true;
+
+                _alreadyLookedForTypes.Remove(implementation);
+            }
+
+            return false;
         }
 
         public override object Create(Type type)
@@ -48,6 +58,7 @@ namespace ConstructorTester.ObjectCreationStrategies
         public override void Reset()
         {
             _alreadyCreatedTypes.Clear();
+            _alreadyLookedForTypes.Clear();
         }
     }
 }

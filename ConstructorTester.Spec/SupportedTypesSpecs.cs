@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Machine.Fakes;
 using Machine.Specifications;
 using TestClassesForTests;
@@ -299,8 +298,8 @@ namespace ConstructorTester.Spec.SupportedTypes
         protected static Exception _exception;
         Behaves_like<One_failed_assertion> _;
 
-        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself) was not tested for null.");
+        It should_tell_me_that_no_suitable_implementation_could_be_found = () =>
+            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesWithInternalsVisibleTrueForTests.ClassWantingItself: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.AbstractItself).");
     }
 
     [Subject(typeof(ArgumentNullTest))]

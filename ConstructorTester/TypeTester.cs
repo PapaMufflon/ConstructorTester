@@ -64,8 +64,7 @@ namespace ConstructorTester
             {
                 parameterCounter++;
 
-                if (!_constraintsTester.ViolatesConstraints(parameterType) &&
-                    _objectBuilder.CanBuildObject(parameterType))
+                if (_objectBuilder.CanBuildObject(parameterType))
                 {
                     tempParameters.Add(_objectBuilder.BuildObject(parameterType));
                 }
