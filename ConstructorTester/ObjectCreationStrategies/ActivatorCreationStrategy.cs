@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using ConstructorTester.Constraints;
 
@@ -10,19 +9,24 @@ namespace ConstructorTester.ObjectCreationStrategies
     {
         private readonly ObjectBuilder _objectBuilder;
         private readonly ConstraintsTester _constraintsTester;
+        private readonly ArgumentsForConstructors _argumentsForConstructors;
+        private readonly TestConfig _testConfig;
 
-        public ActivatorCreationStrategy(ObjectBuilder objectBuilder, ConstraintsTester constraintsTester)
+        public ActivatorCreationStrategy(ObjectBuilder objectBuilder, ConstraintsTester constraintsTester, ArgumentsForConstructors argumentsForConstructors, TestConfig testConfig)
         {
             _objectBuilder = objectBuilder;
             _constraintsTester = constraintsTester;
+            _argumentsForConstructors = argumentsForConstructors;
+            _testConfig = testConfig;
         }
 
         public override bool CanCreate(Type type)
         {
             return type.IsClass &&
-                !type.IsAbstract &&
-                type.GetConstructors().Length > 0 &&
-                CanBuildAllConstructorParameters(type);
+                   !type.IsAbstract &&
+                   type.GetConstructors().Length > 0 &&
+                   !_testConfig.TypesNotToTest.Contains(type) &&
+                   CanBuildAllConstructorParameters(type);
         }
 
         private bool CanBuildAllConstructorParameters(Type type)
@@ -31,13 +35,16 @@ namespace ConstructorTester.ObjectCreationStrategies
             {
                 var canBuild = true;
 
-                foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
+                if (!_argumentsForConstructors.AreAvailableFor(constructorInfo))
                 {
-                    if (_constraintsTester.ViolatesConstraints(parameterInfo.ParameterType) ||
-                        !_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
+                    foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
                     {
-                        canBuild = false;
-                        break;
+                        if (_constraintsTester.ViolatesConstraints(parameterInfo.ParameterType) ||
+                            !_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
+                        {
+                            canBuild = false;
+                            break;
+                        }
                     }
                 }
 
@@ -54,9 +61,14 @@ namespace ConstructorTester.ObjectCreationStrategies
             {
                 var parameters = new List<object>();
 
-                foreach (var parameterInfo in constructorInfo.GetParameters())
+                if (_argumentsForConstructors.AreAvailableFor(constructorInfo))
                 {
-                    parameters.Add(_objectBuilder.BuildObject(parameterInfo.ParameterType));
+                    parameters.AddRange(_argumentsForConstructors.GetArguments(constructorInfo));
+                }
+                else
+                {
+                    foreach (var parameterInfo in constructorInfo.GetParameters())
+                        parameters.Add(_objectBuilder.BuildObject(parameterInfo.ParameterType));
                 }
 
                 return constructorInfo.Invoke(parameters.ToArray());

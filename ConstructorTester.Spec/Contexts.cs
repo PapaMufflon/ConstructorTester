@@ -6,7 +6,7 @@ namespace ConstructorTester.Spec
     {
         OnEstablish context = accessor =>
         {
-            ArgumentNullTest.DeregisterEverything();
+            ArgumentNullTest.Reset();
             ArgumentNullTest.TestInternals = false;
             ArgumentNullTest.TestNullables = false;
         };
@@ -16,7 +16,7 @@ namespace ConstructorTester.Spec
     {
         OnEstablish context = accessor =>
         {
-            ArgumentNullTest.DeregisterEverything();
+            ArgumentNullTest.Reset();
             ArgumentNullTest.TestInternals = true;
             ArgumentNullTest.TestNullables = false;
         };
@@ -26,7 +26,7 @@ namespace ConstructorTester.Spec
     {
         OnEstablish context = accessor =>
         {
-            ArgumentNullTest.DeregisterEverything();
+            ArgumentNullTest.Reset();
             ArgumentNullTest.TestInternals = false;
             ArgumentNullTest.TestNullables = true;
         };

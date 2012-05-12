@@ -331,11 +331,11 @@ namespace ConstructorTester.Spec.SupportedTypes
     }
 
     [Subject(typeof(ArgumentNullTest))]
-    public class Given_a_ActivationArguments : WithSubject<object>
+    public class CurrentTypeNotWorkingWithSystemAssembly : WithSubject<object>
     {
         Establish context = () => With<TestInternalsContext>();
 
-        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Threading.Tasks.Task))));
+        //Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.Policy.ApplicationTrust))));
 
         protected static Exception _exception;
         private Behaves_like<One_failed_assertion> _;

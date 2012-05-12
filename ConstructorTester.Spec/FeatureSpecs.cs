@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
 using TestClassesForTests;
 using TestClassesWithInternalsVisibleTrueForTests;
+using ClassWithoutWrittenConstructor = TestClassesForTests.ClassWithoutWrittenConstructor;
 
 namespace ConstructorTester.Spec.Features
 {
@@ -81,7 +84,7 @@ namespace ConstructorTester.Spec.Features
         {
             With<TestInternalsContext>();
             ArgumentNullTest.Register<InternalAbstractBaseClassWithoutImplementation>(new ImplementationForLonelyAbstractBaseClass());
-            ArgumentNullTest.DeregisterEverything();
+            ArgumentNullTest.Reset();
         };
 
         private class ImplementationForLonelyAbstractBaseClass : InternalAbstractBaseClassWithoutImplementation { }
@@ -101,7 +104,7 @@ namespace ConstructorTester.Spec.Features
         Establish context = () =>
         {
             With<DefaultConfigurationContext>();
-            ArgumentNullTest.DoNotIncludeInNextTest(typeof(ClassWithOneClassParameter), "I'm testing this feature!");
+            ArgumentNullTest.Exclude(typeof(ClassWithOneClassParameter), "I'm testing this feature!");
         };
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter)));
@@ -111,25 +114,21 @@ namespace ConstructorTester.Spec.Features
     }
 
     [Subject(typeof(ArgumentNullTest))]
-    public class Given_a_ctor_that_should_not_be_tested_When_testing_it_twice : WithSubject<object>
+    public class Given_a_constructor_argument_that_should_not_be_tested_When_testing_the_constructor : WithSubject<object>
     {
         Establish context = () =>
         {
             With<DefaultConfigurationContext>();
-            ArgumentNullTest.DoNotIncludeInNextTest(typeof(ClassWithOneClassParameter), "I'm testing this feature!");
+            ArgumentNullTest.Exclude(typeof(ClassWithOneClassParameter), "I'm testing this feature!");
         };
 
-        Because of = () =>
-        {
-            _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter)));
-            _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter)));
-        };
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameterWithNonDefaultConstructor)));
 
         protected static Exception _exception;
         Behaves_like<One_failed_assertion> _;
 
-        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithOneClassParameter: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithoutWrittenConstructor) was not tested for null.");
+        It should_tell_me_that_no_suitable_implementation_could_be_found = () =>
+            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesForTests.ClassWithOneClassParameterWithNonDefaultConstructor: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithOneClassParameter).");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -146,15 +145,36 @@ namespace ConstructorTester.Spec.Features
     }
 
     [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_constructor_wanting_a_special_string_as_parameter_When_testing_it : WithSubject<object>
+    {
+        private static Exception _exception;
+
+        Establish context = () =>
+        {
+            With<DefaultConfigurationContext>();
+            ArgumentNullTest.UseFollowingConstructorParameters<ClassWithSpecialStringArgument>("bar");
+        };
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassUsingAClassWithSpecialStringArgument)));
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassUsingAClassWithSpecialStringArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithSpecialStringArgument) was not tested for null.");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
     public class Given_an_assembly_with_several_classes_When_testing_it : WithSubject<object>
     {
         private static Exception _exception;
 
-        Establish context = () => With<DefaultConfigurationContext>();
+        Establish context = () =>
+        {
+            With<DefaultConfigurationContext>();
+            ArgumentNullTest.UseFollowingConstructorParameters<ClassWithSpecialStringArgument>("bar");
+        };
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter).Assembly));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(17);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(20);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -168,6 +188,8 @@ namespace ConstructorTester.Spec.Features
 
             ArgumentNullTest.Register(typeof(string).Assembly);
             ArgumentNullTest.Register(AppDomain.CurrentDomain.ActivationContext);
+            ArgumentNullTest.UseFollowingConstructorParameters<CultureInfo>("en-US");
+            ArgumentNullTest.Exclude(typeof(FileStream), "Problems with access.");
         };
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(string).Assembly));

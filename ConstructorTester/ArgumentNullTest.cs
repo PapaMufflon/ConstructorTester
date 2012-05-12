@@ -31,7 +31,7 @@ namespace ConstructorTester
         internal TestConfig TestConfig { get; private set; }
 
         private static ArgumentNullTest _argumentNullTest;
-        private static readonly List<Type> TypesNotToTest = new List<Type>();
+        private static readonly ArgumentsForConstructors ArgumentsForConstructors = new ArgumentsForConstructors();
         private readonly TypeTester _typeTester;
 
         private ArgumentNullTest(TypeTester typeTester, TestConfig testConfig)
@@ -61,7 +61,7 @@ namespace ConstructorTester
 
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
             objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
-            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, constraintsTester));
+            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, constraintsTester, ArgumentsForConstructors, testConfig));
 
             var typeTester = new TypeTester(testConfig, constraintsTester, objectBuilder);
             _argumentNullTest = new ArgumentNullTest(typeTester, testConfig);
@@ -118,12 +118,10 @@ namespace ConstructorTester
         {
             var results = new List<string>();
 
-            foreach (var type in types.Where(x => !TypesNotToTest.Contains(x)))
+            foreach (var type in types.Where(x => !Current.TestConfig.TypesNotToTest.Contains(x)))
             {
                 results.AddRange(_typeTester.TestForNullArgumentExceptionsInConstructor(type));
             }
-
-            TypesNotToTest.Clear();
 
             EvaluateResult(results);
         }
@@ -157,24 +155,35 @@ namespace ConstructorTester
         }
 
         /// <summary>
-        /// Empties all registrations made via <c>Register</c>.
+        /// Empties all registrations made via <c>Register</c> and resets the types not to test.
         /// </summary>
-        public static void DeregisterEverything()
+        public static void Reset()
         {
             Current.TestConfig.ClearImplementations();
+            Current.TestConfig.TypesNotToTest.Clear();
         }
 
         /// <summary>
-        /// Leaves out the given type for the next call to <c>Execute</c>.
+        /// Exclude given type in all the tests.
         /// </summary>
         /// <param name="type">Type to leave out for testing.</param>
         /// <param name="reason">Give a reason why not to test this type.</param>
-        public static void DoNotIncludeInNextTest(Type type, string reason)
+        public static void Exclude(Type type, string reason)
         {
             if (string.IsNullOrEmpty(reason))
                 throw new ArgumentNullException("reason", "Don't be lazy - give me a reason!");
 
-            TypesNotToTest.Add(type);
+            Current.TestConfig.TypesNotToTest.Add(type);
+        }
+
+        /// <summary>
+        /// Use given parameters for the constructor of the given type.
+        /// </summary>
+        /// <typeparam name="T">The type to use the parameters for.</typeparam>
+        /// <param name="parameters">The parameters to use for the given type.</param>
+        public static void UseFollowingConstructorParameters<T>(params object[] parameters)
+        {
+            ArgumentsForConstructors.Add(typeof(T), parameters);
         }
     }
 }

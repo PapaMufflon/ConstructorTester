@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentNullTest.cs" />
+    <Compile Include="ArgumentsForConstructors.cs" />
     <Compile Include="Constraints\CannotTestAbstractClass.cs" />
     <Compile Include="Constraints\CannotTestConstructorsWithByRefArguments.cs" />
     <Compile Include="Constraints\CannotTestConstructorsWithPointerArguments.cs" />

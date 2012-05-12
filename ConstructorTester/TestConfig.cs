@@ -8,6 +8,7 @@ namespace ConstructorTester
     {
         public bool TestInternals { get; set; }
         public bool TestNullables { get; set; }
+        public List<Type> TypesNotToTest { get; private set; }
 
         private readonly ObjectBuilder _objectBuilder;
         private readonly Dictionary<Type, object> _container = new Dictionary<Type, object>();
@@ -15,6 +16,8 @@ namespace ConstructorTester
         public TestConfig(ObjectBuilder objectBuilder)
         {
             _objectBuilder = objectBuilder;
+
+            TypesNotToTest = new List<Type>();
         }
 
         public bool HasImplementationFor(Type type)
