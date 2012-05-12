@@ -333,9 +333,13 @@ namespace ConstructorTester.Spec.SupportedTypes
     [Subject(typeof(ArgumentNullTest))]
     public class CurrentTypeNotWorkingWithSystemAssembly : WithSubject<object>
     {
-        Establish context = () => With<TestInternalsContext>();
+        Establish context = () =>
+        {
+            With<TestInternalsContext>();
+            ArgumentNullTest.UseFollowingConstructorParameters<System.Security.Principal.WindowsIdentity>(new IntPtr(1));
+        };
 
-        //Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.Policy.ApplicationTrust))));
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.Principal.WindowsIdentity))));
 
         protected static Exception _exception;
         private Behaves_like<One_failed_assertion> _;

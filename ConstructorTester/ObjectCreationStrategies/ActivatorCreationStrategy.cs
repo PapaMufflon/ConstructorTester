@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using ConstructorTester.Constraints;
 
 namespace ConstructorTester.ObjectCreationStrategies
 {
     internal class ActivatorCreationStrategy : ObjectCreationStrategyBase
     {
         private readonly ObjectBuilder _objectBuilder;
-        private readonly ConstraintsTester _constraintsTester;
         private readonly ArgumentsForConstructors _argumentsForConstructors;
         private readonly TestConfig _testConfig;
+        private readonly List<Type> _typesAlreadyTriedToCreate = new List<Type>();
+        private readonly List<Type> _alreadyLookedForTypes = new List<Type>();
 
-        public ActivatorCreationStrategy(ObjectBuilder objectBuilder, ConstraintsTester constraintsTester, ArgumentsForConstructors argumentsForConstructors, TestConfig testConfig)
+        public ActivatorCreationStrategy(ObjectBuilder objectBuilder, ArgumentsForConstructors argumentsForConstructors, TestConfig testConfig)
         {
             _objectBuilder = objectBuilder;
-            _constraintsTester = constraintsTester;
             _argumentsForConstructors = argumentsForConstructors;
             _testConfig = testConfig;
         }
@@ -39,12 +39,21 @@ namespace ConstructorTester.ObjectCreationStrategies
                 {
                     foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
                     {
-                        if (_constraintsTester.ViolatesConstraints(parameterInfo.ParameterType) ||
-                            !_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
+                        if (_alreadyLookedForTypes.Contains(parameterInfo.ParameterType))
                         {
                             canBuild = false;
                             break;
                         }
+
+                        _alreadyLookedForTypes.Add(parameterInfo.ParameterType);
+
+                        if (!_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
+                        {
+                            canBuild = false;
+                            break;
+                        }
+
+                        _alreadyLookedForTypes.Remove(parameterInfo.ParameterType);
                     }
                 }
 
@@ -57,6 +66,8 @@ namespace ConstructorTester.ObjectCreationStrategies
 
         public override object Create(Type type)
         {
+            _typesAlreadyTriedToCreate.Add(type);
+
             foreach (var constructorInfo in type.GetConstructors())
             {
                 var parameters = new List<object>();
@@ -67,14 +78,31 @@ namespace ConstructorTester.ObjectCreationStrategies
                 }
                 else
                 {
-                    foreach (var parameterInfo in constructorInfo.GetParameters())
-                        parameters.Add(_objectBuilder.BuildObject(parameterInfo.ParameterType));
+                    var parameterTypes = constructorInfo.GetParameters().Select(x => x.ParameterType);
+
+                    if (parameterTypes.All(x => !_typesAlreadyTriedToCreate.Contains(x) && _objectBuilder.CanBuildObject(x)))
+                        parameters.AddRange(parameterTypes.Select(parameterInfo => _objectBuilder.BuildObject(parameterInfo)));
+                    else
+                        continue;
                 }
 
-                return constructorInfo.Invoke(parameters.ToArray());
+                try
+                {
+                    return constructorInfo.Invoke(parameters.ToArray());
+                }
+                catch (TargetInvocationException)
+                {
+                    // continue
+                }
             }
 
             return null;
+        }
+
+        public override void Reset()
+        {
+            _typesAlreadyTriedToCreate.Clear();
+            _alreadyLookedForTypes.Clear();
         }
     }
 }

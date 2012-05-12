@@ -7,6 +7,9 @@ using ConstructorTester.ObjectCreationStrategies;
 
 namespace ConstructorTester
 {
+    /// <summary>
+    /// Checks classes if they throw <c>ArgumentNullException</c>s for their constructor arguments when they are null.
+    /// </summary>
     public class ArgumentNullTest
     {
         /// <summary>
@@ -61,7 +64,7 @@ namespace ConstructorTester
 
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
             objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
-            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, constraintsTester, ArgumentsForConstructors, testConfig));
+            objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, ArgumentsForConstructors, testConfig));
 
             var typeTester = new TypeTester(testConfig, constraintsTester, objectBuilder);
             _argumentNullTest = new ArgumentNullTest(typeTester, testConfig);

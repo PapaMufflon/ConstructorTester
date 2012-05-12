@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
 using TestClassesForTests;
 using TestClassesWithInternalsVisibleTrueForTests;
-using ClassWithoutWrittenConstructor = TestClassesForTests.ClassWithoutWrittenConstructor;
 
 namespace ConstructorTester.Spec.Features
 {
@@ -174,7 +171,7 @@ namespace ConstructorTester.Spec.Features
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter).Assembly));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(20);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(21);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -188,8 +185,9 @@ namespace ConstructorTester.Spec.Features
 
             ArgumentNullTest.Register(typeof(string).Assembly);
             ArgumentNullTest.Register(AppDomain.CurrentDomain.ActivationContext);
-            ArgumentNullTest.UseFollowingConstructorParameters<CultureInfo>("en-US");
-            ArgumentNullTest.Exclude(typeof(FileStream), "Problems with access.");
+            ArgumentNullTest.UseFollowingConstructorParameters<System.Globalization.CultureInfo>("en-US");
+            ArgumentNullTest.Exclude(typeof(System.IO.FileStream), "Problems with access.");
+            ArgumentNullTest.UseFollowingConstructorParameters<System.Security.Principal.WindowsIdentity>(new IntPtr(1));
         };
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(string).Assembly));
