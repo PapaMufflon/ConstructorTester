@@ -62,6 +62,7 @@ namespace ConstructorTester
             var testConfig = new TestConfig(objectBuilder);
             var constraintsTester = new ConstraintsTester(BuildConstraints(testConfig), testConfig);
 
+            objectBuilder.ObjectCreationStrategies.Add(new MockObjectCreationStrategy(objectBuilder, testConfig));
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
             objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
             objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, ArgumentsForConstructors, testConfig));
@@ -74,7 +75,6 @@ namespace ConstructorTester
         {
             return new List<IObjectCreationStrategy>
             {
-                new MockObjectCreationStrategy(),
                 new EnumValueCreationStrategy(),
                 new ValueTypeCreationStrategy(),
                 new StructCreationStrategy(),

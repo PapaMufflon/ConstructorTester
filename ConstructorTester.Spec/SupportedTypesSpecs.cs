@@ -151,6 +151,20 @@ namespace ConstructorTester.Spec.SupportedTypes
     }
 
     [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_ctor_with_an_abstract_argument_with_arguments_in_its_constructor_without_reachable_implementation_When_testing_it : WithSubject<object>
+    {
+        Establish context = () => With<DefaultConfigurationContext>();
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithNoImplementationForItsAbstractArgumentWithArgumentsInConstructor)));
+
+        protected static Exception _exception;
+        Behaves_like<One_failed_assertion> _;
+
+        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNoImplementationForItsAbstractArgumentWithArgumentsInConstructor: parameter 1 of constructor Void .ctor(TestClassesForTests.PubliAbstractBaseClassWithoutImplementationButWithConstructorArguments) was not tested for null.");
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
     public class Given_a_ctor_with_an_internal_abstract_argument_When_testing_it : WithSubject<object>
     {
         Establish context = () => With<TestInternalsContext>();
@@ -339,6 +353,7 @@ namespace ConstructorTester.Spec.SupportedTypes
             ArgumentNullTest.UseFollowingConstructorParameters<System.Security.Principal.WindowsIdentity>(new IntPtr(1));
         };
 
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.AccessControl.CryptoKeyAccessRule))));
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.Principal.WindowsIdentity))));
 
         protected static Exception _exception;
