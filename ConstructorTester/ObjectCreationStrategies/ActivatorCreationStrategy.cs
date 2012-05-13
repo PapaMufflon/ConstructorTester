@@ -31,37 +31,34 @@ namespace ConstructorTester.ObjectCreationStrategies
 
         private bool CanBuildAllConstructorParameters(Type type)
         {
-            foreach (ConstructorInfo constructorInfo in type.GetConstructors())
-            {
-                var canBuild = true;
+            return type.GetConstructors().Any(CanBuildConstructor);
+        }
 
-                if (!_argumentsForConstructors.AreAvailableFor(constructorInfo))
-                {
-                    foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
-                    {
-                        if (_alreadyLookedForTypes.Contains(parameterInfo.ParameterType))
-                        {
-                            canBuild = false;
-                            break;
-                        }
+        private bool CanBuildConstructor(ConstructorInfo constructorInfo)
+        {
+            var canBuild = false;
 
-                        _alreadyLookedForTypes.Add(parameterInfo.ParameterType);
+            if (_argumentsForConstructors.AreAvailableFor(constructorInfo))
+                canBuild = true;
+            else
+                canBuild = constructorInfo.GetParameters().All(CanBuildParameter);
 
-                        if (!_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
-                        {
-                            canBuild = false;
-                            break;
-                        }
+            return canBuild;
+        }
 
-                        _alreadyLookedForTypes.Remove(parameterInfo.ParameterType);
-                    }
-                }
+        private bool CanBuildParameter(ParameterInfo parameterInfo)
+        {
+            if (_alreadyLookedForTypes.Contains(parameterInfo.ParameterType))
+                return false;
 
-                if (canBuild)
-                    return true;
-            }
+            _alreadyLookedForTypes.Add(parameterInfo.ParameterType);
 
-            return false;
+            if (!_objectBuilder.CanBuildObject(parameterInfo.ParameterType))
+                return false;
+
+            _alreadyLookedForTypes.Remove(parameterInfo.ParameterType);
+
+            return true;
         }
 
         public override object Create(Type type)
@@ -70,21 +67,10 @@ namespace ConstructorTester.ObjectCreationStrategies
 
             foreach (var constructorInfo in type.GetConstructors())
             {
-                var parameters = new List<object>();
+                object[] parameters;
 
-                if (_argumentsForConstructors.AreAvailableFor(constructorInfo))
-                {
-                    parameters.AddRange(_argumentsForConstructors.GetArguments(constructorInfo));
-                }
-                else
-                {
-                    var parameterTypes = constructorInfo.GetParameters().Select(x => x.ParameterType);
-
-                    if (parameterTypes.All(x => !_typesAlreadyTriedToCreate.Contains(x) && _objectBuilder.CanBuildObject(x)))
-                        parameters.AddRange(parameterTypes.Select(parameterInfo => _objectBuilder.BuildObject(parameterInfo)));
-                    else
-                        continue;
-                }
+                if (!TryGetParameters(constructorInfo, out parameters))
+                    continue;
 
                 try
                 {
@@ -97,6 +83,36 @@ namespace ConstructorTester.ObjectCreationStrategies
             }
 
             return null;
+        }
+
+        private bool TryGetParameters(ConstructorInfo constructorInfo, out object[] parameters)
+        {
+            parameters = null;
+            var tempParameters = new List<object>();
+
+            if (_argumentsForConstructors.AreAvailableFor(constructorInfo))
+            {
+                tempParameters.AddRange(_argumentsForConstructors.GetArguments(constructorInfo));
+            }
+            else
+            {
+                var parameterTypes = constructorInfo
+                    .GetParameters()
+                    .Select(x => x.ParameterType)
+                    .ToList();
+
+                if (CanBuildAllParameters(parameterTypes))
+                    tempParameters.AddRange(parameterTypes.Select(parameterInfo => _objectBuilder.BuildObject(parameterInfo)));
+            }
+
+            parameters = tempParameters.ToArray();
+            return parameters.Length > 0;
+        }
+
+        private bool CanBuildAllParameters(IEnumerable<Type> parameterTypes)
+        {
+            return parameterTypes.All(x => !_typesAlreadyTriedToCreate.Contains(x) &&
+                                           _objectBuilder.CanBuildObject(x));
         }
 
         public override void Reset()

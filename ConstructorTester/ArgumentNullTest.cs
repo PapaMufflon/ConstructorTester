@@ -12,25 +12,6 @@ namespace ConstructorTester
     /// </summary>
     public class ArgumentNullTest
     {
-        /// <summary>
-        /// If set to <c>true</c>, <c>Nullable&lt;T&gt;</c> should also be checked for not null.
-        /// </summary>
-        public static bool TestNullables
-        {
-            get { return Current.TestConfig.TestNullables; }
-            set { Current.TestConfig.TestNullables = value; }
-        }
-
-        /// <summary>
-        /// If set to <c>true</c>, internal constructors are tested also
-        /// (please make sure, ConstructorTester has access to internal classes via the InternalsVisibleTo-attribute).
-        /// </summary>
-        public static bool TestInternals
-        {
-            get { return Current.TestConfig.TestInternals; }
-            set { Current.TestConfig.TestInternals = value; }
-        }
-
         internal TestConfig TestConfig { get; private set; }
 
         private static ArgumentNullTest _argumentNullTest;
@@ -43,31 +24,50 @@ namespace ConstructorTester
             _typeTester = typeTester;
         }
 
-        private static ArgumentNullTest Current
+        /// <summary>
+        /// If set to <c>true</c>, <c>Nullable&lt;T&gt;</c> should also be checked for not null.
+        /// </summary>
+        public static bool TestNullables
+        {
+            get { return Instance.TestConfig.TestNullables; }
+            set { Instance.TestConfig.TestNullables = value; }
+        }
+
+        /// <summary>
+        /// If set to <c>true</c>, internal constructors are tested also
+        /// (please make sure, ConstructorTester has access to internal classes via the InternalsVisibleTo-attribute).
+        /// </summary>
+        public static bool TestInternals
+        {
+            get { return Instance.TestConfig.TestInternals; }
+            set { Instance.TestConfig.TestInternals = value; }
+        }
+
+        private static ArgumentNullTest Instance
         {
             get
             {
                 if (_argumentNullTest == null)
-                    CreateCurrentArgumentNullTest();
+                    CreateArgumentNullTest();
 
                 return _argumentNullTest;
             }
         }
 
-        private static void CreateCurrentArgumentNullTest()
+        private static void CreateArgumentNullTest()
         {
             var objectBuilder = new ObjectBuilder();
             objectBuilder.ObjectCreationStrategies.AddRange(BuildObjectCreationStrategies());
 
             var testConfig = new TestConfig(objectBuilder);
-            var constraintsTester = new ConstraintsTester(BuildConstraints(testConfig), testConfig);
-
-            objectBuilder.ObjectCreationStrategies.Add(new MockObjectCreationStrategy(objectBuilder, testConfig));
+            objectBuilder.ObjectCreationStrategies.Add(new MockObjectCreationStrategy(objectBuilder));
             objectBuilder.ObjectCreationStrategies.Add(new RegisteredImplementationCreationStrategy(testConfig));
             objectBuilder.ObjectCreationStrategies.Add(new SearchForAnImplementationCreationStrategy(objectBuilder));
             objectBuilder.ObjectCreationStrategies.Add(new ActivatorCreationStrategy(objectBuilder, ArgumentsForConstructors, testConfig));
 
+            var constraintsTester = new ConstraintsTester(BuildConstraints(testConfig), testConfig);
             var typeTester = new TypeTester(testConfig, constraintsTester, objectBuilder);
+
             _argumentNullTest = new ArgumentNullTest(typeTester, testConfig);
         }
 
@@ -105,7 +105,7 @@ namespace ConstructorTester
         /// <param name="assemblyUnderTest"><c>Assembly</c> to check.</param>
         public static void Execute(Assembly assemblyUnderTest)
         {
-            Current.TestTypes(assemblyUnderTest.GetTypes());
+            Instance.TestTypes(assemblyUnderTest.GetTypes());
         }
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace ConstructorTester
         /// <param name="classUnderTest"><c>Type</c> to check.</param>
         public static void Execute(Type classUnderTest)
         {
-            Current.TestTypes(new List<Type> { classUnderTest });
+            Instance.TestTypes(new List<Type> { classUnderTest });
         }
 
         private void TestTypes(IEnumerable<Type> types)
         {
             var results = new List<string>();
 
-            foreach (var type in types.Where(x => !Current.TestConfig.TypesNotToTest.Contains(x)))
+            foreach (var type in types.Where(x => !Instance.TestConfig.TypesNotToTest.Contains(x)))
             {
                 results.AddRange(_typeTester.TestForNullArgumentExceptionsInConstructor(type));
             }
@@ -144,7 +144,7 @@ namespace ConstructorTester
             where TImplementation : TBase
             where TBase : class
         {
-            Current.TestConfig.RegisterImplementationFor(typeof(TBase), typeof(TImplementation));
+            Instance.TestConfig.RegisterImplementationFor(typeof(TBase), typeof(TImplementation));
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace ConstructorTester
         /// <param name="implementation">The concrete object which should be used for <c>T</c>.</param>
         public static void Register<T>(T implementation)
         {
-            Current.TestConfig.RegisterImplementationFor(typeof(T), implementation);
+            Instance.TestConfig.RegisterImplementationFor(typeof(T), implementation);
         }
 
         /// <summary>
@@ -162,8 +162,8 @@ namespace ConstructorTester
         /// </summary>
         public static void Reset()
         {
-            Current.TestConfig.ClearImplementations();
-            Current.TestConfig.TypesNotToTest.Clear();
+            Instance.TestConfig.ClearImplementations();
+            Instance.TestConfig.TypesNotToTest.Clear();
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace ConstructorTester
             if (string.IsNullOrEmpty(reason))
                 throw new ArgumentNullException("reason", "Don't be lazy - give me a reason!");
 
-            Current.TestConfig.TypesNotToTest.Add(type);
+            Instance.TestConfig.TypesNotToTest.Add(type);
         }
 
         /// <summary>

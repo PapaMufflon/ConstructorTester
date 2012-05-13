@@ -72,6 +72,7 @@ namespace ConstructorTester
                 {
                     _failedAssertions.Add(string.Format("There was a problem when testing class {0}: cannot find an implementation for parameter {1} of constructor {2}.",
                                 constructor.DeclaringType, parameterCounter, constructor));
+
                     result = false;
                 }
             }
@@ -87,10 +88,15 @@ namespace ConstructorTester
             {
                 var parameterType = constructor.GetParameters()[parameterCounter].ParameterType;
 
-                if (!parameterType.IsValueType ||
-                    (_testConfig.TestNullables && Nullable.GetUnderlyingType(parameterType) != null))
+                if (CanTestParameterForNull(parameterType))
                     TestOneParameterForNull(constructor, parameters, parameterCounter, classUnderTest);
             }
+        }
+
+        private bool CanTestParameterForNull(Type parameterType)
+        {
+            return !parameterType.IsValueType ||
+                   (_testConfig.TestNullables && Nullable.GetUnderlyingType(parameterType) != null);
         }
 
         private void TestOneParameterForNull(ConstructorInfo constructor, object[] parameters, int parameterToTest, string classUnderTest)

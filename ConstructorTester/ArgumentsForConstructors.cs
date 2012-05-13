@@ -18,7 +18,7 @@ namespace ConstructorTester
                 if (constructorParameters.Length != parameters.Length)
                     continue;
 
-                if (Enumerable.Range(0, parameters.Count()).Any(index => constructorParameters[index].ParameterType != parameters[index].GetType()))
+                if (!AreParameterTypesEqual(parameters, constructorParameters))
                     continue;
 
                 if (_constructorArguments.ContainsKey(constructorInfo))
@@ -27,6 +27,13 @@ namespace ConstructorTester
                 _constructorArguments.Add(constructorInfo, parameters);
                 return;
             }
+        }
+
+        private static bool AreParameterTypesEqual(object[] parameters, ParameterInfo[] constructorParameters)
+        {
+            return Enumerable
+                .Range(0, parameters.Count())
+                .All(index => constructorParameters[index].ParameterType == parameters[index].GetType());
         }
 
         public bool AreAvailableFor(ConstructorInfo constructorInfo)

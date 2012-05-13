@@ -161,7 +161,7 @@ namespace ConstructorTester.Spec.SupportedTypes
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNoImplementationForItsAbstractArgumentWithArgumentsInConstructor: parameter 1 of constructor Void .ctor(TestClassesForTests.PubliAbstractBaseClassWithoutImplementationButWithConstructorArguments) was not tested for null.");
+            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassWithNoImplementationForItsAbstractArgumentWithArgumentsInConstructor: parameter 1 of constructor Void .ctor(TestClassesForTests.PublicAbstractBaseClassWithoutImplementationButWithConstructorArguments) was not tested for null.");
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -342,24 +342,5 @@ namespace ConstructorTester.Spec.SupportedTypes
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
             _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.SerializableClassAsConstructorArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.SerializableClass) was not tested for null.");
-    }
-
-    [Subject(typeof(ArgumentNullTest))]
-    public class CurrentTypeNotWorkingWithSystemAssembly : WithSubject<object>
-    {
-        Establish context = () =>
-        {
-            With<TestInternalsContext>();
-            ArgumentNullTest.UseFollowingConstructorParameters<System.Security.Principal.WindowsIdentity>(new IntPtr(1));
-        };
-
-        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.AccessControl.CryptoKeyAccessRule))));
-        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute((typeof(System.Security.Principal.WindowsIdentity))));
-
-        protected static Exception _exception;
-        private Behaves_like<One_failed_assertion> _;
-
-        It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class System.Threading.Timer: parameter 2 of constructor Void .ctor(TestClassesForTests.SerializableClass) was not tested for null.");
     }
 }

@@ -7,7 +7,7 @@ namespace ConstructorTester.Constraints
     {
         internal override bool CanEvaluateConstructorInfo(ConstructorInfo constructorInfo)
         {
-            return constructorInfo.GetParameters().Any(x => x.ParameterType.GetConstructors().Count() == 0);
+            return constructorInfo.GetParameters().Any(x => !x.ParameterType.GetConstructors().Any());
         }
     }
 }

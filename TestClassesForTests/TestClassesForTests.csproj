@@ -58,7 +58,7 @@
     <Compile Include="ClassWithTwoConstructors.cs" />
     <Compile Include="IInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PubliAbstractBaseClassWithoutImplementationButWithConstructorArguments.cs" />
+    <Compile Include="PublicAbstractBaseClassWithoutImplementationButWithConstructorArguments.cs" />
     <Compile Include="PublicAbsractBaseClassWithoutImplementation.cs" />
     <Compile Include="PublicAbstractBaseClass.cs" />
     <Compile Include="PublicAbstractBaseClassImpl.cs" />
