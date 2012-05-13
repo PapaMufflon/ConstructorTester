@@ -106,7 +106,7 @@ namespace ConstructorTester.ObjectCreationStrategies
             }
 
             parameters = tempParameters.ToArray();
-            return parameters.Length > 0;
+            return constructorInfo.GetParameters().Length == 0 || parameters.Length > 0;
         }
 
         private bool CanBuildAllParameters(IEnumerable<Type> parameterTypes)

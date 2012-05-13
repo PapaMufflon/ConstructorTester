@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -193,5 +194,21 @@ namespace ConstructorTester.Spec.Features
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(string).Assembly));
 
         It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(3078);
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_a_directory_with_several_assemblies_with_several_classes_When_testing_it : WithSubject<object>
+    {
+        private static Exception _exception;
+
+        Establish context = () =>
+        {
+            With<DefaultConfigurationContext>();
+            ArgumentNullTest.UseFollowingConstructorParameters<ClassWithSpecialStringArgument>("bar");
+        };
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(".", "*Test*.dll"));
+
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(77);
     }
 }

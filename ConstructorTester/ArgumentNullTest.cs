@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using ConstructorTester.Constraints;
@@ -96,6 +97,31 @@ namespace ConstructorTester
                 new CannotTestConstructorsWithRuntimeArgumentHandleArguments(),
                 new CannotTestConstructorsWithByRefArguments()
             };
+        }
+
+        /// <summary>
+        /// Tests all classes specified by the path and searchPattern.
+        /// </summary>
+        /// <param name="path">The directory to search.</param>
+        /// <param name="searchPattern">The search string to match against the names of directories in path.</param>
+        /// <param name="searchOption">One of the values of the SearchOption enumeration that specifies whether the search operation should include only the current directory or should include all subdirectories.The default value is TopDirectoryOnly.</param> 
+        public static void Execute(string path, string searchPattern = "*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            var types = new List<Type>();
+
+            foreach (var file in Directory.EnumerateFiles(path, searchPattern, searchOption))
+            {
+                try
+                {
+                    types.AddRange(Assembly.LoadFrom(file).GetTypes());
+                }
+                catch (BadImageFormatException e)
+                {
+                    throw new ArgumentException("Provide a searchPattern that finds only valid assemblies.", e);
+                }
+            }
+
+            Instance.TestTypes(types);
         }
 
         /// <summary>
