@@ -43,10 +43,10 @@ Register<TBase, TImplementation>()
 Register<T>(T implementation)
 If there is no implementation for an interface or abstract argument in a constructor, you can register one.
 
-DeregisterEverything()
-Resets all registered implementations.
+Reset()
+Empties all registrations made via Register and resets the types not to test.
 
-DoNotIncludeInNextTest(Type type, string reason)
+Exclude(Type type, string reason)
 Maybe you have some really good excuses not to test an argument for null. Just exclude it giving a reason.
 
 ## Limitations
