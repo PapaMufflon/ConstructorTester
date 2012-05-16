@@ -24,11 +24,11 @@ namespace ConstructorTester.Constraints
             return violations > 0;
         }
 
-        public ICollection<string> EvaluateConstraints(object @object)
+        public ICollection<Evaluation> EvaluateConstraints(object @object)
         {
             return _constraints.Where(x => x.CanEvaluate(@object))
                 .Select(x => x.Evaluate(@object))
-                .Where(x => !string.IsNullOrEmpty(x))
+                .Where(x => x.Failed)
                 .ToList();
         }
     }

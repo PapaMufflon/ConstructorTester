@@ -17,19 +17,16 @@ namespace ConstructorTester.Constraints
             return true;
         }
 
-        public string Evaluate(object @object)
+        public Evaluation Evaluate(object @object)
         {
-            var result = "";
             var constructorInfo = @object as ConstructorInfo;
 
             if (constructorInfo == null)
                 throw new ArgumentException("Cannot evaluate objects that are not of type ConstructorInfo.");
 
-            result = EvaluateConstructorInfo(constructorInfo);
-
-            return result;
+            return EvaluateConstructorInfo(constructorInfo);
         }
 
-        protected abstract string EvaluateConstructorInfo(ConstructorInfo constructorInfo);
+        protected abstract Evaluation EvaluateConstructorInfo(ConstructorInfo constructorInfo);
     }
 }

@@ -135,6 +135,15 @@ namespace ConstructorTester
         }
 
         /// <summary>
+        /// Tests all constructors of the given <c>Type</c>s if all parameters are checked for null.
+        /// </summary>
+        /// <param name="classesUnderTest"><c>Type</c>s to check.</param>
+        public static void Execute(IEnumerable<Type> classesUnderTest)
+        {
+            Instance.TestTypes(classesUnderTest);
+        }
+
+        /// <summary>
         /// Tests all constructors of the given <c>Type</c> if all parameters are checked for null.
         /// </summary>
         /// <param name="classUnderTest"><c>Type</c> to check.</param>
@@ -145,20 +154,14 @@ namespace ConstructorTester
 
         private void TestTypes(IEnumerable<Type> types)
         {
-            var results = new List<string>();
+            var results = new List<IResult>();
 
             foreach (var type in types.Where(x => !Instance.TestConfig.TypesNotToTest.Contains(x)))
             {
                 results.AddRange(_typeTester.TestForNullArgumentExceptionsInConstructor(type));
             }
 
-            EvaluateResult(results);
-        }
-
-        private static void EvaluateResult(ICollection<string> failedAssertions)
-        {
-            if (failedAssertions.Count > 0)
-                throw new ArgumentException(failedAssertions.Aggregate("", (s, t) => s + Environment.NewLine + t).Substring(Environment.NewLine.Length));
+            results.Evaluate();
         }
 
         /// <summary>

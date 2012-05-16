@@ -5,12 +5,15 @@ namespace ConstructorTester.Constraints
 {
     internal class CannotTestConstructorsWithByRefArguments : ConstructorInfoBaseConstraint
     {
-        protected override string EvaluateConstructorInfo(ConstructorInfo constructorInfo)
+        protected override Evaluation EvaluateConstructorInfo(ConstructorInfo constructorInfo)
         {
-            var result = "";
+            var result = new Evaluation(constructorInfo.DeclaringType);
 
             if (constructorInfo.GetParameters().Any(x => x.ParameterType.IsByRef))
-                result = "Sorry, ConstructorTester can't test Constructors containing ByRef-arguments. Use the DoNotTest-method to omit this class.";
+            {
+                result.Failed = true;
+                result.Message = "Sorry, ConstructorTester can't test Constructors containing ByRef-arguments.";
+            }
 
             return result;
         }

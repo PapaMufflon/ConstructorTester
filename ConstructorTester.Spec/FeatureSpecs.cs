@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Machine.Fakes;
@@ -36,7 +37,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
+            _exception.Message.ShouldEqual("Found possible weaknesses:" + Environment.NewLine + "  In class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not checked for null." + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -56,7 +57,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not tested for null.");
+            _exception.Message.ShouldEqual("Found possible weaknesses:" + Environment.NewLine + "  In class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation) was not checked for null." + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -72,7 +73,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_no_suitable_implementation_was_found = () =>
-            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
+            _exception.Message.ShouldEqual("ConstructorTester cannot test following classes:" + Environment.NewLine + "  TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation)" + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -93,7 +94,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_no_suitable_implementation_was_found = () =>
-            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation).");
+            _exception.Message.ShouldEqual("ConstructorTester cannot test following classes:" + Environment.NewLine + "  TestClassesWithInternalsVisibleTrueForTests.ClassWithInternalAbstractArgumentWithoutPublicImplementationInsideAssembly: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesWithInternalsVisibleTrueForTests.InternalAbstractBaseClassWithoutImplementation)" + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -126,7 +127,7 @@ namespace ConstructorTester.Spec.Features
         Behaves_like<One_failed_assertion> _;
 
         It should_tell_me_that_no_suitable_implementation_could_be_found = () =>
-            _exception.Message.ShouldEqual("There was a problem when testing class TestClassesForTests.ClassWithOneClassParameterWithNonDefaultConstructor: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithOneClassParameter).");
+            _exception.Message.ShouldEqual("ConstructorTester cannot test following classes:" + Environment.NewLine + "  TestClassesForTests.ClassWithOneClassParameterWithNonDefaultConstructor: cannot find an implementation for parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithOneClassParameter)" + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -156,7 +157,24 @@ namespace ConstructorTester.Spec.Features
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassUsingAClassWithSpecialStringArgument)));
 
         It should_tell_me_that_the_argument_was_not_checked_for_null = () =>
-            _exception.Message.ShouldEqual("Found a weakness in class TestClassesForTests.ClassUsingAClassWithSpecialStringArgument: parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithSpecialStringArgument) was not tested for null.");
+            _exception.Message.ShouldEqual("Found possible weaknesses:" + Environment.NewLine + "  In class TestClassesForTests.ClassUsingAClassWithSpecialStringArgument parameter 1 of constructor Void .ctor(TestClassesForTests.ClassWithSpecialStringArgument) was not checked for null." + Environment.NewLine);
+    }
+
+    [Subject(typeof(ArgumentNullTest))]
+    public class Given_two_abstract_constructors_When_testing_it : WithSubject<object>
+    {
+        private static Exception _exception;
+
+        Establish context = () =>
+        {
+            With<DefaultConfigurationContext>();
+            ArgumentNullTest.UseFollowingConstructorParameters<ClassWithSpecialStringArgument>("bar");
+        };
+
+        Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(new List<Type> { typeof(PublicAbstractClassWithTwoConstructors), typeof(PublicAbstractBaseClass) }));
+
+        It should_tell_me_that_both_constructors_cannot_be_tested = () =>
+            _exception.Message.ShouldEqual("Sorry, ConstructorTester can't test abstract classes. Use ArgumentNullTest.Exclude to omit these classes:" + Environment.NewLine + "  TestClassesForTests.PublicAbstractClassWithTwoConstructors" + Environment.NewLine + "  TestClassesForTests.PublicAbstractBaseClass" + Environment.NewLine);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -172,7 +190,7 @@ namespace ConstructorTester.Spec.Features
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(ClassWithOneClassParameter).Assembly));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new [] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(22);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(27);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -193,7 +211,7 @@ namespace ConstructorTester.Spec.Features
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(typeof(string).Assembly));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(3078);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(3086);
     }
 
     [Subject(typeof(ArgumentNullTest))]
@@ -209,6 +227,6 @@ namespace ConstructorTester.Spec.Features
 
         Because of = () => _exception = Catch.Exception(() => ArgumentNullTest.Execute(".", "*Test*.dll"));
 
-        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(77);
+        It should_tell_me_all_the_failures = () => _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(85);
     }
 }

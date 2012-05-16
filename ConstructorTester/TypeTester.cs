@@ -11,7 +11,7 @@ namespace ConstructorTester
         private readonly TestConfig _testConfig;
         private readonly ConstraintsTester _constraintsTester;
         private readonly ObjectBuilder _objectBuilder;
-        private readonly List<string> _failedAssertions = new List<string>();
+        private readonly List<IResult> _results = new List<IResult>();
 
         public TypeTester(TestConfig testConfig, ConstraintsTester constraintsTester, ObjectBuilder objectBuilder)
         {
@@ -20,17 +20,17 @@ namespace ConstructorTester
             _objectBuilder = objectBuilder;
         }
 
-        public IEnumerable<string> TestForNullArgumentExceptionsInConstructor(Type type)
+        public IEnumerable<IResult> TestForNullArgumentExceptionsInConstructor(Type type)
         {
             _objectBuilder.Reset();
 
-            _failedAssertions.Clear();
-            _failedAssertions.AddRange(_constraintsTester.EvaluateConstraints(type));
+            _results.Clear();
+            _results.AddRange(_constraintsTester.EvaluateConstraints(type));
 
-            if (_failedAssertions.Count == 0)
+            if (_results.Count == 0)
                 TestType(type);
 
-            return _failedAssertions;
+            return _results;
         }
 
         private void TestType(Type type)
@@ -45,11 +45,11 @@ namespace ConstructorTester
                 if (!failedAssertionsForCurrentConstructor.Any() &&
                     TryGetParameters(constructor, out parameters))
                 {
-                    TestParameters(constructor, parameters, type.ToString());
+                    TestParameters(constructor, parameters, type);
                 }
                 else
                 {
-                    _failedAssertions.AddRange(failedAssertionsForCurrentConstructor);
+                    _results.AddRange(failedAssertionsForCurrentConstructor);
                 }
             }
         }
@@ -70,8 +70,11 @@ namespace ConstructorTester
                 }
                 else
                 {
-                    _failedAssertions.Add(string.Format("There was a problem when testing class {0}: cannot find an implementation for parameter {1} of constructor {2}.",
-                                constructor.DeclaringType, parameterCounter, constructor));
+                    _results.Add(new Problem
+                    {
+                        Message = string.Format("{0}: cannot find an implementation for parameter {1} of constructor {2}",
+                            constructor.DeclaringType, parameterCounter, constructor)
+                    });
 
                     result = false;
                 }
@@ -82,7 +85,7 @@ namespace ConstructorTester
             return result;
         }
 
-        private void TestParameters(ConstructorInfo constructor, object[] parameters, string classUnderTest)
+        private void TestParameters(ConstructorInfo constructor, object[] parameters, Type classUnderTest)
         {
             for (int parameterCounter = 0; parameterCounter < parameters.Length; parameterCounter++)
             {
@@ -99,7 +102,7 @@ namespace ConstructorTester
                    (_testConfig.TestNullables && Nullable.GetUnderlyingType(parameterType) != null);
         }
 
-        private void TestOneParameterForNull(ConstructorInfo constructor, object[] parameters, int parameterToTest, string classUnderTest)
+        private void TestOneParameterForNull(ConstructorInfo constructor, object[] parameters, int parameterToTest, Type classUnderTest)
         {
             // copy parameters to not destroy them
             var parametersCopy = (object[])parameters.Clone();
@@ -119,10 +122,12 @@ namespace ConstructorTester
             }
 
             if (!catched)
-                _failedAssertions.Add(string.Format("Found a weakness in class {0}: parameter {1} of constructor {2} was not tested for null.",
-                    classUnderTest,
-                    parameterToTest + 1,
-                    constructor));
+                _results.Add(new Weakness
+                {
+                    Type = classUnderTest,
+                    Constructor = constructor,
+                    ParameterPosition = parameterToTest + 1
+                });
         }
     }
 }

@@ -50,9 +50,8 @@
     <Compile Include="Constraints\ConstraintsTester.cs" />
     <Compile Include="Constraints\ConstructorInfoBaseConstraint.cs" />
     <Compile Include="Constraints\IConstraint.cs" />
-    <Compile Include="Constraints\NoImplementationForAbstractParametersAvailableConstraintImpl.cs" />
-    <Compile Include="Constraints\NoImplementationForParametersAvailableConstraint.cs" />
-    <Compile Include="Constraints\NoImplementationForParametersWithoutConstructorsAvailableConstraintImpl.cs" />
+    <Compile Include="Evaluation.cs" />
+    <Compile Include="IResult.cs" />
     <Compile Include="ObjectBuilder.cs" />
     <Compile Include="ObjectCreationStrategies\ActivatorCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\DelegateCreationStrategy.cs" />
@@ -67,9 +66,12 @@
     <Compile Include="ObjectCreationStrategies\StringCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\StructCreationStrategy.cs" />
     <Compile Include="ObjectCreationStrategies\ValueTypeCreationStrategy.cs" />
+    <Compile Include="Problem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultListExtensions.cs" />
     <Compile Include="TestConfig.cs" />
     <Compile Include="TypeTester.cs" />
+    <Compile Include="Weakness.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ConstructorTester.nuspec">

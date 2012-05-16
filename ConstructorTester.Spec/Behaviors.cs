@@ -18,7 +18,7 @@ namespace ConstructorTester.Spec
         protected static Exception _exception;
 
         It should_throw_an_ArgumentException = () =>
-            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(1);
+            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(2);
     }
 
     [Behaviors]
@@ -27,7 +27,7 @@ namespace ConstructorTester.Spec
         protected static Exception _exception;
 
         It should_throw_an_ArgumentException = () =>
-            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(2);
+            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(3);
     }
 
     [Behaviors]
@@ -36,6 +36,6 @@ namespace ConstructorTester.Spec
         protected static Exception _exception;
 
         It should_throw_an_ArgumentException = () =>
-            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(3);
+            _exception.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Count().ShouldEqual(4);
     }
 }

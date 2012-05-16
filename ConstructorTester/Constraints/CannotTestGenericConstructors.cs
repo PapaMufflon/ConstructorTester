@@ -4,12 +4,15 @@ namespace ConstructorTester.Constraints
 {
     internal class CannotTestGenericConstructors : ConstructorInfoBaseConstraint
     {
-        protected override string EvaluateConstructorInfo(ConstructorInfo constructorInfo)
+        protected override Evaluation EvaluateConstructorInfo(ConstructorInfo constructorInfo)
         {
-            var result = "";
+            var result = new Evaluation(constructorInfo.DeclaringType);
 
             if (constructorInfo.ContainsGenericParameters)
-                result = "Sorry, ConstructorTester can't test generic Constructors. Use the DoNotTest-method to omit this class.";
+            {
+                result.Failed = true;
+                result.Message = "Sorry, ConstructorTester can't test generic Constructors.";
+            }
 
             return result;
         }

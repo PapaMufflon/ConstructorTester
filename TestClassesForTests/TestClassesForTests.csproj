@@ -62,6 +62,7 @@
     <Compile Include="PublicAbsractBaseClassWithoutImplementation.cs" />
     <Compile Include="PublicAbstractBaseClass.cs" />
     <Compile Include="PublicAbstractBaseClassImpl.cs" />
+    <Compile Include="PublicAbstractClassWithTwoConstructors.cs" />
     <Compile Include="SerializableClass.cs" />
     <Compile Include="SerializableClassAsConstructorArgument.cs" />
   </ItemGroup>

@@ -9,16 +9,20 @@ namespace ConstructorTester.Constraints
             return @object is Type;
         }
 
-        public string Evaluate(object @object)
+        public Evaluation Evaluate(object @object)
         {
-            var result = "";
             var type = @object as Type;
 
             if (type == null)
                 throw new ArgumentException("Cannot evaluate objects that are not Type.");
+            
+            var result = new Evaluation(type);
 
             if (type.IsAbstract)
-                result = string.Format("Sorry, ConstructorTester can't test abstract classes. Use the DoNotTest-method to omit this class ({0}).", type);
+            {
+                result.Failed = true;
+                result.Message = "Sorry, ConstructorTester can't test abstract classes.";
+            }
 
             return result;
         }
